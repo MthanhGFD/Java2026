@@ -1,6 +1,6 @@
 # 📌 ĐỒ ÁN HỌC PHẦN JAVA  
 ## ✈️ HỆ THỐNG QUẢN LÝ BÁN VÉ MÁY BAY
-
+(được ChatGPT hỗ trợ cho đẹp hơn)
 ---
 
 ## 📖 Giới thiệu
