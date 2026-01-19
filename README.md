@@ -28,6 +28,9 @@
 - **Model**: Các class đối tượng (Entity)
 - **Service**: Danh sách & xử lý dữ liệu
 - **Manage**: Quản lý nghiệp vụ, điều phối chức năng
+- **Data**: Dữ liệu để chạy đồ án
+- **GUI**: gui
+- **Main**: hàm main
 
 ---
 
