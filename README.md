@@ -14,3 +14,11 @@
 10. Chương trình khuyến mãi (CTKM)
 11. Chi tiết CTKM
 12. CTKM (Hóa đơn)
+
+---------------------------------------
+
+# Model: Các class 
+
+# Service: Danh sách
+
+# Manage: Quản lí 
