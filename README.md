@@ -61,4 +61,4 @@
 - ❌ Tránh nhiều người cùng chỉnh sửa một file
 - ✔️ Luôn pull trước khi bắt đầu code
 - ✔️ Commit rõ ràng, dễ hiểu
-- ✔️ Thông báo nhóm khi có thay
+- ✔️ Thông báo nhóm khi có thay đổi
