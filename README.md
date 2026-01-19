@@ -39,11 +39,11 @@
 3. Gõ lệnh: code .
 
 # Các lệnh git
-- git checkout <tên_nhánh>    -# BẮT BUỘC làm đầu tiên
-- git add .                   -# Thêm tất cả file đã chỉnh sửa
+- git checkout <tên_nhánh>    ---    // BẮT BUỘC làm đầu tiên
+- git add .    ---    // Thêm tất cả file đã chỉnh sửa
 - git commit -m "Mô tả thay đổi"
-- git push origin <tên_nhánh> -# Đẩy code lên nhánh cá nhân
-- git pull origin main        -# Lấy code mới nhất từ nhánh chính
+- git push origin <tên_nhánh>    ---   // Đẩy code lên nhánh cá nhân
+- git pull origin main    ---    // Lấy code mới nhất từ nhánh chính
 
 ---
 
