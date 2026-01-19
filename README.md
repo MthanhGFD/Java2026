@@ -29,8 +29,8 @@
 - **Service**: Danh sách & xử lý dữ liệu
 - **Manage**: Quản lý nghiệp vụ, điều phối chức năng
 - **Data**: Dữ liệu để chạy đồ án
-- **GUI**: gui
-- **Main**: hàm main
+- **GUI**: Gui
+- **Main**: Hàm main
 
 ---
 
@@ -39,7 +39,7 @@
 ### 🔹 Mở dự án
 1. Tạo thư mục chứa đồ án:
   - Mở git bash
-  - gõ lệnh: git clone <link github>
+  - Gõ lệnh: git clone <link github>
 2. Mở thư mục **Java2026**
 3. Chuột phải → **Open Git Bash here**
 4. Gõ lệnh: code .
