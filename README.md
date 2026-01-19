@@ -37,9 +37,12 @@
 ## 🛠️ Hướng dẫn làm việc với Git & VS Code
 
 ### 🔹 Mở dự án
-1. Mở thư mục **Java2026**
-2. Chuột phải → **Open Git Bash here**
-3. Gõ lệnh: code .
+1. Tạo thư mục chứa đồ án:
+  - Mở git bash
+  - gõ lệnh: git clone <link github>
+2. Mở thư mục **Java2026**
+3. Chuột phải → **Open Git Bash here**
+4. Gõ lệnh: code .
 
 # Các lệnh git
 - git checkout <tên_nhánh>    ---    // BẮT BUỘC làm đầu tiên
