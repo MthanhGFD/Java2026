@@ -1,10 +1,10 @@
 # 📌 ĐỒ ÁN HỌC PHẦN JAVA  
 ## ✈️ HỆ THỐNG QUẢN LÝ BÁN VÉ MÁY BAY
-(được ChatGPT hỗ trợ cho đẹp hơn)
+
 ---
 
 ## 📖 Giới thiệu
-Đây là đồ án học phần **Java**, xây dựng hệ thống **quản lý bán vé máy bay**, áp dụng lập trình hướng đối tượng (OOP), quản lý dữ liệu và làm việc nhóm với **Git**.
+Đây là đồ án học phần **Java**, xây dựng hệ thống **quản lý bán vé máy bay**, áp dụng lập trình hướng đối tượng (OOP), quản lý dữ liệu và làm việc nhóm với **Git** (được ChatGPT hỗ trợ làm đẹp README).
 
 ---
 
