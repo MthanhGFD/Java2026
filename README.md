@@ -4,7 +4,7 @@
 ---
 
 ## 📖 Giới thiệu
-Đây là đồ án học phần **Java**, xây dựng hệ thống **quản lý bán vé máy bay**, áp dụng lập trình hướng đối tượng (OOP), quản lý dữ liệu và làm việc nhóm với **Git** (được ChatGPT hỗ trợ làm đẹp README).
+Đây là đồ án học phần **Java**, xây dựng hệ thống **quản lý bán vé máy bay**, áp dụng lập trình hướng đối tượng (OOP), quản lý dữ liệu và làm việc nhóm với **Git** (được ChatGPT hỗ trợ làm đẹp README 🐧).
 
 ---
 
@@ -38,7 +38,7 @@
 
 ### 🔹 Mở dự án
 1. Tạo thư mục chứa đồ án:
-  - Mở git bash
+  - Chuột phải -> mở git bash
   - Gõ lệnh: git clone https://github.com/MthanhGFD/Java2026
 2. Mở thư mục **Java2026**
 3. Chuột phải → **Open Git Bash here**
