@@ -64,6 +64,8 @@
 - Thông báo cho nhóm sau khi push xong
 
 # ⚠️ Lưu ý quan trọng
+- Mở Terminal: CTRL + `
+- Cần mạng để sử dụng git
 - ❌ Tránh nhiều người cùng chỉnh sửa một file
 - ✔️ Luôn pull trước khi bắt đầu code
 - ✔️ Commit rõ ràng, dễ hiểu
