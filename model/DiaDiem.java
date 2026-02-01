@@ -14,12 +14,12 @@ public class DiaDiem {
 
     }
 
-    public String getmaDiaDiem(){return maDiaDiem;}
-    public void setmaDiaDiem(String maDD){this.maDiaDiem = maDD;}
+    public String getMaDiaDiem(){return maDiaDiem;}
+    public void setMaDiaDiem(String maDD){this.maDiaDiem = maDD;}
 
-    public String gettenDiaDiem(){return this.tenDiaDiem;}
-    public void settenDiaDiem(String tenDD){this.tenDiaDiem = tenDD;}
-
+    public String getTenDiaDiem(){return this.tenDiaDiem;}
+    public void setTenDiaDiem(String tenDD){this.tenDiaDiem = tenDD;}   
+    
     public String getQuocGia(){return QuocGia;}
     public void setQuocGia(String QuocGia){this.QuocGia = QuocGia;}
 

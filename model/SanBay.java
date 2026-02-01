@@ -13,12 +13,12 @@ public class SanBay {
         this.tenChuyenBay = tenCB;
     }
     
-    public String getmaSanBay(){return maSanBay;}
-    public void setmaSanBay( String maSB ){this.maSanBay = maSB;}
+    public String getMaSanBay(){return maSanBay;}
+    public void setMaSanBay( String maSB ){this.maSanBay = maSB;}
 
-    public String getmaDiaDiem(){return maDiaDiem;}
-    public void setmaDiaDiem(String maDD) {this.maDiaDiem = maDD;}
-
-    public String gettenChuyenBay(){return tenChuyenBay;}
-    public void settenChuyenBay(String tenCB){this.tenChuyenBay = tenCB;}
+    public String getMaDiaDiem(){return maDiaDiem;}
+    public void setMaDiaDiem(String maDD) {this.maDiaDiem = maDD;}
+    
+    public String getTenChuyenBay(){return tenChuyenBay;}
+    public void setTenChuyenBay(String tenCB){this.tenChuyenBay = tenCB;}
 }
