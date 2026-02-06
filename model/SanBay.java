@@ -21,4 +21,14 @@ public class SanBay {
     
     public String getTenChuyenBay(){return tenChuyenBay;}
     public void setTenChuyenBay(String tenCB){this.tenChuyenBay = tenCB;}
+
+    @Override
+    public String toString(){   
+        return "SanBay{" +
+                "maSanBay='" + maSanBay + '\'' +
+                ", maDiaDiem='" + maDiaDiem + '\'' +
+                ", tenChuyenBay='" + tenChuyenBay + '\'' +
+                '}';
+    }
 }
+

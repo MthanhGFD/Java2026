@@ -23,4 +23,13 @@ public class DiaDiem {
     public String getQuocGia(){return QuocGia;}
     public void setQuocGia(String QuocGia){this.QuocGia = QuocGia;}
 
+    @Override
+    public String toString(){
+        return "DiaDiem{" +
+                "maDiaDiem='" + maDiaDiem + '\'' +
+                ", tenDiaDiem='" + tenDiaDiem + '\'' +
+                ", QuocGia='" + QuocGia + '\'' +
+                '}';
+    }
 }
+

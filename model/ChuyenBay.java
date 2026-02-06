@@ -1,5 +1,6 @@
 package model;
 
+
 public class ChuyenBay{
    String maChuyenBay;
    String maMayBay;
@@ -67,5 +68,21 @@ public class ChuyenBay{
     public long getTienVeThuVe(long giaVe){ 
         this.TienVeThuVe = giaVe * this.SoVeDaBan;
         return this.TienVeThuVe;
+    }
+
+    @Override
+    public String toString() {
+        return "ChuyenBay{" +
+                "maChuyenBay='" + maChuyenBay + '\'' +
+                ", maMayBay='" + maMayBay + '\'' +
+                ", maHangHangKhong='" + maHangHangKhong + '\'' +
+                ", maSanBayDi='" + maSanBayDi + '\'' +
+                ", maSanBayDen='" + maSanBayDen + '\'' +
+                ", NgayBay='" + NgayBay + '\'' +
+                ", GioBay='" + GioBay + '\'' +
+                ", GioDen='" + GioDen + '\'' +
+                ", TongSoVe=" + TongSoVe +
+                ", SoVeDaBan=" + SoVeDaBan +
+                '}';
     }
 }
