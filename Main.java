@@ -1,6 +1,8 @@
 import service.DanhSachCTKM;
 import service.DanhSachDiaDiem;
 import service.DanhSachHoaDon;
+import service.DanhSachVe;
+import model.Ve;
 import model.CTKM;
 import model.DiaDiem;
 import model.HoaDon;
@@ -29,6 +31,16 @@ public class Main {
         System.out.println("\nDanh sách Hóa đơn:");
         for (HoaDon h : dsHoaDon.getDanhSach()) {
             System.out.println(h.getMaHoaDon() + " - " + h.getMaKhachHang() + " - " + h.getGiaSauKhiGiam());
+        }
+     
+       // Load dữ liệu Vé
+        DanhSachVe dsVe = new DanhSachVe();
+        dsVe.docFile("data/Ve.csv");
+        System.out.println("\nDanh sách Vé Máy Bay:");
+        for (Ve v : dsVe.getDSVe()) {
+            if (v != null) {
+                System.out.println(v.getMaVe() + " - " + v.getMaChuyenBay() + " - " + v.getGiaVe());
+            }
         }
     }
 }
