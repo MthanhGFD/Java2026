@@ -35,12 +35,15 @@ public class Main {
      
        // Load dữ liệu Vé
         DanhSachVe dsVe = new DanhSachVe();
-        dsVe.docFile("data/Ve.csv");
-        System.out.println("\nDanh sách Vé Máy Bay:");
+        dsVe.docFile("data/Ve.csv"); 
+        System.out.println("\nDanh sách Vé Máy Bay (Chi tiết):");
+        System.out.println("-------------------------");
         for (Ve v : dsVe.getDSVe()) {
             if (v != null) {
-                System.out.println(v.getMaVe() + " - " + v.getMaChuyenBay() + " - " + v.getGiaVe());
+                System.out.println(v.toString());
             }
+        }
+        System.out.println("----------------------------");
         }
     }
 }
