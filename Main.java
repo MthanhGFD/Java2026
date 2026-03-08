@@ -2,6 +2,8 @@ import service.DanhSachCTKM;
 import service.DanhSachDiaDiem;
 import service.DanhSachHoaDon;
 import service.DanhSachVe;
+import service.DanhSachChiTietHoaDon;
+import model.ChiTietHoaDon;
 import model.Ve;
 import model.CTKM;
 import model.DiaDiem;
@@ -39,11 +41,18 @@ public class Main {
         System.out.println("\nDanh sách Vé Máy Bay (Chi tiết):");
         System.out.println("-------------------------");
         for (Ve v : dsVe.getDSVe()) {
-            if (v != null) {
                 System.out.println(v.toString());
-            }
-        }
         System.out.println("----------------------------");
+        }
+    
+    //load dữ liệu chitiethoadon
+    DanhSachChiTietHoaDon dsCTHD = new DanhSachChiTietHoaDon();
+        dsCTHD.docFile("data/ChiTietHoaDon.csv"); 
+        System.out.println("\nDanh sách Chi tiết Hóa đơn:");
+        for (ChiTietHoaDon ct : dsCTHD.getDanhSach()) {
+                System.out.println(ct.getMaChiTiet() + " - " + ct.getMaHoaDon() + " - " 
+                                 + ct.getTenHanhKhach() + " - " + ct.getLoaiVe() + " - " 
+                                 + ct.getSoGhe() + " - " + ct.getGiaVe() + " - " + ct.getGhiChu());
         }
     }
 }
