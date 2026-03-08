@@ -2,70 +2,71 @@ package model;
 
 public class Ve {
 
-    private String maVe;           
-    private String maChuyenBay;   
-    private String tenHanhKhach;   
-    private String cccd;           
-    private String loaiVe;         
-    private String soGhe;          
-    private double giaVe;          
-    private String trangThai;      
+    protected String MaVe;
+    protected String MaChuyenBay;
+    protected String MaGhe;
+    protected double GiaVe;
+    protected String LoaiVe;
 
-    // ===== Constructor rỗng =====
     public Ve() {
     }
 
-    // ===== Constructor đầy đủ =====
-    public Ve(String maVe, String maChuyenBay, String tenHanhKhach,
-              String cccd, String loaiVe, String soGhe,
-              double giaVe, String trangThai) {
-
-        this.maVe = maVe;
-        this.maChuyenBay = maChuyenBay;
-        this.tenHanhKhach = tenHanhKhach;
-        this.cccd = cccd;
-        this.loaiVe = loaiVe;
-        this.soGhe = soGhe;
-        this.giaVe = giaVe;
-        this.trangThai = trangThai;
+    public Ve(String MaVe, String MaChuyenBay, String MaGhe, double GiaVe, String LoaiVe) {
+        this.MaVe = MaVe;
+        this.MaChuyenBay = MaChuyenBay;
+        this.MaGhe = MaGhe;
+        this.GiaVe = GiaVe;
+        this.LoaiVe = LoaiVe;
     }
 
-    // ===== Getter & Setter =====
+    public String getMaVe() {
+        return MaVe;
+    }
 
-    public String getMaVe() { return maVe; }
-    public void setMaVe(String maVe) { this.maVe = maVe; }
+    public void setMaVe(String MaVe) {
+        this.MaVe = MaVe;
+    }
 
-    public String getMaChuyenBay() { return maChuyenBay; }
-    public void setMaChuyenBay(String maChuyenBay) { this.maChuyenBay = maChuyenBay; }
+    public String getMaChuyenBay() {
+        return MaChuyenBay;
+    }
 
-    public String getTenHanhKhach() { return tenHanhKhach; }
-    public void setTenHanhKhach(String tenHanhKhach) { this.tenHanhKhach = tenHanhKhach; }
+    public void setMaChuyenBay(String MaChuyenBay) {
+        this.MaChuyenBay = MaChuyenBay;
+    }
 
-    public String getCccd() { return cccd; }
-    public void setCccd(String cccd) { this.cccd = cccd; }
+    public String getMaGhe() {
+        return MaGhe;
+    }
 
-    public String getLoaiVe() { return loaiVe; }
-    public void setLoaiVe(String loaiVe) { this.loaiVe = loaiVe; }
+    public void setMaGhe(String MaGhe) {
+        this.MaGhe = MaGhe;
+    }
 
-    public String getSoGhe() { return soGhe; }
-    public void setSoGhe(String soGhe) { this.soGhe = soGhe; }
+    public double getGiaVe() {
+        return GiaVe;
+    }
 
-    public double getGiaVe() { return giaVe; }
-    public void setGiaVe(double giaVe) { this.giaVe = giaVe; }
+    public void setGiaVe(double GiaVe) {
+        this.GiaVe = GiaVe;
+    }
 
-    public String getTrangThai() { return trangThai; }
-    public void setTrangThai(String trangThai) { this.trangThai = trangThai; }
+    public String getLoaiVe() {
+        return LoaiVe;
+    }
 
-    // ===== Hiển thị =====
+    public void setLoaiVe(String LoaiVe) {
+        this.LoaiVe = LoaiVe;
+    }
+
     @Override
     public String toString() {
         return "Ve{" +
-                "Mã vé='" + maVe + '\'' +
-                ", Hành khách='" + tenHanhKhach + '\'' +
-                ", Ghế='" + soGhe + '\'' +
-                ", Giá=" + giaVe +
-                ", Trạng thái='" + trangThai + '\'' +
+                "MaVe='" + MaVe + '\'' +
+                ", MaChuyenBay='" + MaChuyenBay + '\'' +
+                ", MaGhe='" + MaGhe + '\'' +
+                ", GiaVe=" + GiaVe +
+                ", LoaiVe='" + LoaiVe + '\'' +
                 '}';
     }
-
 }
