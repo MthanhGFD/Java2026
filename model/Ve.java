@@ -70,3 +70,85 @@ public class Ve {
                 '}';
     }
 }
+
+
+// ===== Vé thường =====
+class VeThuong extends Ve {
+
+    private double PhiHanhLy;
+    private double PhiDichVu;
+
+    public VeThuong() {
+    }
+
+    public VeThuong(String MaVe, String MaChuyenBay, String MaGhe, double GiaVe, String LoaiVe,
+                    double PhiHanhLy, double PhiDichVu) {
+        super(MaVe, MaChuyenBay, MaGhe, GiaVe, LoaiVe);
+        this.PhiHanhLy = PhiHanhLy;
+        this.PhiDichVu = PhiDichVu;
+    }
+
+    public double getPhiHanhLy() {
+        return PhiHanhLy;
+    }
+
+    public void setPhiHanhLy(double PhiHanhLy) {
+        this.PhiHanhLy = PhiHanhLy;
+    }
+
+    public double getPhiDichVu() {
+        return PhiDichVu;
+    }
+
+    public void setPhiDichVu(double PhiDichVu) {
+        this.PhiDichVu = PhiDichVu;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() +
+                ", PhiHanhLy=" + PhiHanhLy +
+                ", PhiDichVu=" + PhiDichVu;
+    }
+}
+
+
+// ===== Vé VIP =====
+class VeVIP extends Ve {
+
+    private String PhongCho;
+    private String QuaTang;
+
+    public VeVIP() {
+    }
+
+    public VeVIP(String MaVe, String MaChuyenBay, String MaGhe, double GiaVe, String LoaiVe,
+                 String PhongCho, String QuaTang) {
+        super(MaVe, MaChuyenBay, MaGhe, GiaVe, LoaiVe);
+        this.PhongCho = PhongCho;
+        this.QuaTang = QuaTang;
+    }
+
+    public String getPhongCho() {
+        return PhongCho;
+    }
+
+    public void setPhongCho(String PhongCho) {
+        this.PhongCho = PhongCho;
+    }
+
+    public String getQuaTang() {
+        return QuaTang;
+    }
+
+    public void setQuaTang(String QuaTang) {
+        this.QuaTang = QuaTang;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() +
+                ", PhongCho='" + PhongCho + '\'' +
+                ", QuaTang='" + QuaTang + '\'';
+    }
+}
