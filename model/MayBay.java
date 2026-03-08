@@ -1,9 +1,9 @@
 package model;
 
 public class MayBay {
-    private String maMayBay;
-    private String tenMayBay;
-    private int soGhe;
+     String maMayBay;
+     String tenMayBay;
+     int soGhe;
 
     // 1. Constructor rỗng
     public MayBay() {

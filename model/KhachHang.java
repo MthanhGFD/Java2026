@@ -1,12 +1,12 @@
 package model;
 
 public class KhachHang {
-    private String maKhachHang;
-    private String ho;
-    private String ten;
-    private String ngaySinh;    
-    private String soDienThoai;
-    private String email;
+     String maKhachHang;
+     String ho;
+     String ten;
+     String ngaySinh;    
+     String soDienThoai;
+     String email;
 
     // 1. Constructor rỗng
     public KhachHang() {

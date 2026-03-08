@@ -1,8 +1,8 @@
 package service;
 
-import model.HanhKhach;
 import java.io.*;
 import java.util.Arrays;
+import model.HanhKhach;
 
 public class DanhSachHanhKhach {
 
