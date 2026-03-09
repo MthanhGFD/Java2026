@@ -46,13 +46,14 @@ public class Main {
         }
     
     //load dữ liệu chitiethoadon
-    DanhSachChiTietHoaDon dsCTHD = new DanhSachChiTietHoaDon();
+   DanhSachChiTietHoaDon dsCTHD = new DanhSachChiTietHoaDon();
         dsCTHD.docFile("data/ChiTietHoaDon.csv"); 
+
         System.out.println("\nDanh sách Chi tiết Hóa đơn:");
-        for (ChiTietHoaDon ct : dsCTHD.getDanhSach()) {
-                System.out.println(ct.getMaChiTiet() + " - " + ct.getMaHoaDon() + " - " 
-                                 + ct.getTenHanhKhach() + " - " + ct.getLoaiVe() + " - " 
-                                 + ct.getSoGhe() + " - " + ct.getGiaVe() + " - " + ct.getGhiChu());
+        for (ChiTietHoaDon ct : dsCTHD.getDSCTHD()) {
+            System.out.println(ct.getMaHD() + " " + ct.getMaKH() + " " 
+                             + ct.getMaVe() + " " + ct.getGiaVe() + " " 
+                             + ct.getGiaSauKhiGiam());
         }
     }
 }
