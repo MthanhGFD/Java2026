@@ -29,10 +29,10 @@ public class DanhSachMayBay {
             while ((line = br.readLine()) != null) {
                 String[] tokens = line.split(",");
                 MayBay mb = new MayBay();
-
+                int soLuong = Integer.parseInt(tokens[1]);
                 mb.setMaMayBay(tokens[0]);
-                mb.setLoaiMayBay(tokens[1]);
-                mb.setSucChua(Integer.parseInt(tokens[2]));
+                mb.setSoGhe(soLuong);
+                mb.setTenMayBay((tokens[2]));
 
                 them(mb);
             }
@@ -109,50 +109,4 @@ public class DanhSachMayBay {
         }
         return -1;
     }
-
-    // danh sách theo loại máy bay
-    public MayBay[] dsLoaiMayBay(String loai) {
-        MayBay[] ds = new MayBay[0];
-        int j = 0;
-        for (int i = 0; i < soLuong; i++) {
-            if (dsMayBay[i].getLoaiMayBay().equalsIgnoreCase(loai)) {
-                ds = Arrays.copyOf(ds, j + 1);
-                ds[j] = dsMayBay[i];
-                j++;
-            }
-        }
-
-        return ds;
-    }
-
-    // thống kê theo loại
-    public void thongKeLoaiMayBay() {
-
-    String[] loai = new String[0];
-    int[] soLuong = new int[0];
-
-    for (int i = 0; i < this.soLuong; i++) {
-        String loaiMB = dsMayBay[i].getLoaiMayBay();
-        int vt = -1;
-
-        for (int j = 0; j < loai.length; j++) {
-            if (loai[j].equalsIgnoreCase(loaiMB)) {
-                vt = j;
-                break;
-            }
-        }
-        if (vt == -1) {
-            loai = Arrays.copyOf(loai, loai.length + 1);
-            soLuong = Arrays.copyOf(soLuong, soLuong.length + 1);
-
-            loai[loai.length - 1] = loaiMB;
-            soLuong[soLuong.length - 1] = 1;
-        } else {
-            soLuong[vt]++;
-        }
-    }
-    for (int i = 0; i < loai.length; i++) {
-        System.out.println(loai[i] + ": " + soLuong[i]);
-    }
-}
 }

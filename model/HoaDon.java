@@ -1,15 +1,15 @@
 package model;
 
 public class HoaDon {
-    private String maHoaDon;
-    private String maKhachHang;   
-    private int tongSoVeDat;      
-    private double tongTienVe;    
-    private String maChuyenBay;   
-    private String ngayDat;
-    private String maKhuyenMai;   
-    private double giaSauKhiGiam; 
-    private String ghiChu;
+     String maHoaDon;
+     String maKhachHang;   
+     int tongSoVeDat;      
+     double tongTienVe;    
+     String maChuyenBay;   
+     String ngayDat;
+     String maKhuyenMai;   
+     double giaSauKhiGiam; 
+     String ghiChu;
 
     // 1. Constructor rỗng
     public HoaDon() {

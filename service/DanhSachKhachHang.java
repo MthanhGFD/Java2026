@@ -1,21 +1,21 @@
 package service;
 
-import model.HanhKhach;
 import java.io.*;
 import java.util.Arrays;
+import model.KhachHang;
 
-public class DanhSachHanhKhach {
+public class DanhSachKhachHang {
 
-    private HanhKhach[] dsHanhKhach;
+    private KhachHang[] dsKhachHang;
     private int soLuong;
 
-    public DanhSachHanhKhach() {
-        dsHanhKhach = new HanhKhach[0];
+    public DanhSachKhachHang() {
+        dsKhachHang = new KhachHang[0];
         soLuong = 0;
     }
 
-    public HanhKhach[] getDsHanhKhach() {
-        return dsHanhKhach;
+    public KhachHang[] getDHangs() {
+        return dsKhachHang;
     }
 
     public int getSoLuong() {
@@ -33,23 +33,22 @@ public class DanhSachHanhKhach {
 
                 String[] tokens = line.split(",");
 
-                HanhKhach hk = new HanhKhach();
+                KhachHang kh = new KhachHang();
 
-                hk.setMaHanhKhach(tokens[0]);
+                kh.setMaKhachHang(tokens[0]);
 
                 String tenDayDu = tokens[1];
                 String ten = tenDayDu.substring(tenDayDu.lastIndexOf(" ") + 1);
                 String ho = tenDayDu.substring(0, tenDayDu.length() - ten.length());
 
-                hk.setHo(ho);
-                hk.setTen(ten);
-                hk.setNgaysinh(tokens[2]);
-                hk.setDanhxung(tokens[3]);
-                hk.setCccd(tokens[4]);
-                hk.setSdt(tokens[5]);
-                hk.setLoaiHanhKhach(tokens[6]);
+                kh.setHo(ho);
+                kh.setTen(ten);
+                kh.setMaKhachHang(tokens[2]);
+                kh.setEmail(tokens[3]);
+                kh.setNgaySinh(tokens[4]);
+                kh.setSoDienThoai(tokens[5]);
 
-                them(hk);
+                them(kh);
             }
 
         } catch (IOException e) {
@@ -63,7 +62,7 @@ public class DanhSachHanhKhach {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(tenFile))) {
 
             for (int i = 0; i < soLuong; i++) {
-                bw.write(dsHanhKhach[i].toString());
+                bw.write(dsKhachHang[i].toString());
                 bw.newLine();
             }
 
@@ -73,53 +72,53 @@ public class DanhSachHanhKhach {
     }
 
     // thêm
-    public void them(HanhKhach hk) {
+    public void them(KhachHang hk) {
 
-        if (tim(hk.getMaHanhKhach()) != null)
+        if (tim(hk.getMaKhachHang()) != null)
             return;
 
-        dsHanhKhach = Arrays.copyOf(dsHanhKhach, soLuong + 1);
-        dsHanhKhach[soLuong] = hk;
+        dsKhachHang = Arrays.copyOf(dsKhachHang, soLuong + 1);
+        dsKhachHang[soLuong] = hk;
         soLuong++;
     }
 
     // xóa
-    public boolean xoa(String maHanhKhach) {
+    public boolean xoa(String maKhachHang) {
 
-        int vitri = timViTri(maHanhKhach);
+        int vitri = timViTri(maKhachHang);
 
         if (vitri == -1)
             return false;
 
         for (int i = vitri; i < soLuong - 1; i++) {
-            dsHanhKhach[i] = dsHanhKhach[i + 1];
+            dsKhachHang[i] = dsKhachHang[i + 1];
         }
 
-        dsHanhKhach = Arrays.copyOf(dsHanhKhach, soLuong - 1);
+        dsKhachHang = Arrays.copyOf(dsKhachHang, soLuong - 1);
         soLuong--;
 
         return true;
     }
 
     // sửa
-    public boolean sua(HanhKhach hkMoi) {
+    public boolean sua(KhachHang hkMoi) {
 
-        int vitri = timViTri(hkMoi.getMaHanhKhach());
+        int vitri = timViTri(hkMoi.getMaKhachHang());
 
         if (vitri == -1)
             return false;
 
-        dsHanhKhach[vitri] = hkMoi;
+        dsKhachHang[vitri] = hkMoi;
 
         return true;
     }
 
     // tìm theo mã
-    public HanhKhach tim(String ma) {
+    public KhachHang tim(String ma) {
 
         for (int i = 0; i < soLuong; i++) {
-            if (dsHanhKhach[i].getMaHanhKhach().equals(ma)) {
-                return dsHanhKhach[i];
+            if (dsKhachHang[i].getMaKhachHang().equals(ma)) {
+                return dsKhachHang[i];
             }
         }
 
@@ -130,7 +129,7 @@ public class DanhSachHanhKhach {
     public int timViTri(String ma) {
 
         for (int i = 0; i < soLuong; i++) {
-            if (dsHanhKhach[i].getMaHanhKhach().equals(ma)) {
+            if (dsKhachHang[i].getMaKhachHang().equals(ma)) {
                 return i;
             }
         }
@@ -139,80 +138,34 @@ public class DanhSachHanhKhach {
     }
 
     // tìm theo tên
-    public HanhKhach[] timTen(String ten) {
+    public KhachHang[] timTen(String ten) {
 
-        HanhKhach[] ds = new HanhKhach[0];
+        KhachHang[] ds = new KhachHang[0];
         int j = 0;
 
         for (int i = 0; i < soLuong; i++) {
 
-            if (dsHanhKhach[i].getTen().equalsIgnoreCase(ten)) {
+            if (dsKhachHang[i].getTen().equalsIgnoreCase(ten)) {
 
                 ds = Arrays.copyOf(ds, j + 1);
-                ds[j] = dsHanhKhach[i];
+                ds[j] = dsKhachHang[i];
                 j++;
             }
         }
-
-        sortTen(ds);
-
         return ds;
     }
 
-    // danh sách VIP
-    public HanhKhach[] dsVip() {
+    public KhachHang[] timNgaySinh(String ngaySinh) {
 
-        HanhKhach[] ds = new HanhKhach[0];
+        KhachHang[] ds = new KhachHang[0];
         int j = 0;
 
         for (int i = 0; i < soLuong; i++) {
 
-            if (dsHanhKhach[i].getLoaiHanhKhach().equalsIgnoreCase("vip")) {
+            if (dsKhachHang[i].getNgaySinh().equals(ngaySinh)) {
 
                 ds = Arrays.copyOf(ds, j + 1);
-                ds[j] = dsHanhKhach[i];
-                j++;
-            }
-        }
-
-        sortTen(ds);
-
-        return ds;
-    }
-
-    // danh sách thường
-    public HanhKhach[] dsThuong() {
-
-        HanhKhach[] ds = new HanhKhach[0];
-        int j = 0;
-
-        for (int i = 0; i < soLuong; i++) {
-
-            if (dsHanhKhach[i].getLoaiHanhKhach().equalsIgnoreCase("thuong")) {
-
-                ds = Arrays.copyOf(ds, j + 1);
-                ds[j] = dsHanhKhach[i];
-                j++;
-            }
-        }
-
-        sortTen(ds);
-
-        return ds;
-    }
-
-    // tìm theo ngày sinh
-    public HanhKhach[] timNgaySinh(String ngaySinh) {
-
-        HanhKhach[] ds = new HanhKhach[0];
-        int j = 0;
-
-        for (int i = 0; i < soLuong; i++) {
-
-            if (dsHanhKhach[i].getNgaysinh().equals(ngaySinh)) {
-
-                ds = Arrays.copyOf(ds, j + 1);
-                ds[j] = dsHanhKhach[i];
+                ds[j] = dsKhachHang[i];
                 j++;
             }
         }
@@ -221,58 +174,15 @@ public class DanhSachHanhKhach {
     }
 
     // tìm SĐT
-    public HanhKhach timSDT(String sdt) {
+    public KhachHang timSDT(String sdt) {
 
         for (int i = 0; i < soLuong; i++) {
 
-            if (dsHanhKhach[i].getSdt().equals(sdt)) {
-                return dsHanhKhach[i];
+            if (dsKhachHang[i].getSoDienThoai().equals(sdt)) {
+                return dsKhachHang[i];
             }
         }
 
         return null;
-    }
-
-    // tìm theo tuổi
-    public HanhKhach[] dsTuoi(int tuoi) {
-
-        HanhKhach[] ds = new HanhKhach[0];
-        int j = 0;
-
-        for (int i = 0; i < soLuong; i++) {
-
-            if (dsHanhKhach[i].tuoi() == tuoi) {
-
-                ds = Arrays.copyOf(ds, j + 1);
-                ds[j] = dsHanhKhach[i];
-                j++;
-            }
-        }
-
-        return ds;
-    }
-
-    // thống kê tuổi
-    public int[] thongKeTuoi() {
-        int[] slTuoi = new int[100];
-
-        for (int i = 0; i < soLuong; i++) {
-            slTuoi[dsHanhKhach[i].tuoi()]++;
-        }
-
-        return slTuoi;
-    }
-
-    // sắp xếp theo tên
-    private void sortTen(HanhKhach[] ds) {
-        for (int i = 0; i < ds.length - 1; i++) {
-            for (int j = i + 1; j < ds.length; j++) {
-                if (ds[i].getTen().compareToIgnoreCase(ds[j].getTen()) > 0) {
-                    HanhKhach temp = ds[i];
-                    ds[i] = ds[j];
-                    ds[j] = temp;
-                }
-            }
-        }
     }
 }

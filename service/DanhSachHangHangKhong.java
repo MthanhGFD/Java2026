@@ -1,8 +1,8 @@
 package service;
 
-import model.HangHangKhong;
 import java.io.*;
 import java.util.Arrays;
+import model.HangHangKhong;
 
 public class DanhSachHangHangKhong {
 
@@ -22,9 +22,7 @@ public class DanhSachHangHangKhong {
         return soLuong;
     }
 
-    // =========================
     // Đọc file
-    // =========================
     public void docFile(String tenFile) {
 
         try{
@@ -36,8 +34,8 @@ public class DanhSachHangHangKhong {
                 String[] tokens = line.split(",");
 
                 HangHangKhong hhk = new HangHangKhong();
-                hhk.setMaHang(tokens[0]);
-                hhk.setTenHang(tokens[1]);
+                hhk.setMaHangHK(tokens[0]);
+                hhk.setTenHangHK(tokens[1]);
                 hhk.setQuocGia(tokens[2]);
 
                 them(hhk);
@@ -92,7 +90,7 @@ public class DanhSachHangHangKhong {
 
     public boolean sua(HangHangKhong hhkMoi) {
 
-        int vitri = timViTri(hhkMoi.getMaHang());
+        int vitri = timViTri(hhkMoi.getMaHangHK());
 
         if (vitri == -1)
             return false;
@@ -105,7 +103,7 @@ public class DanhSachHangHangKhong {
     public HangHangKhong tim(String ma) {
 
         for (int i = 0; i < soLuong; i++) {
-            if (dsHangHangKhong[i].getMaHang().equals(ma)) {
+            if (dsHangHangKhong[i].getMaHangHK().equals(ma)) {
                 return dsHangHangKhong[i];
             }
         }
@@ -116,7 +114,7 @@ public class DanhSachHangHangKhong {
     public HangHangKhong timTheoTen(String tenHang) {
 
         for (int i = 0; i < soLuong; i++) {
-            if (dsHangHangKhong[i].getTenHang().equalsIgnoreCase(tenHang)) {
+            if (dsHangHangKhong[i].getTenHangHK().equalsIgnoreCase(tenHang)) {
                 return dsHangHangKhong[i];
             }
         }
@@ -145,7 +143,7 @@ public class DanhSachHangHangKhong {
     public int timViTri(String ma) {
 
         for (int i = 0; i < soLuong; i++) {
-            if (dsHangHangKhong[i].getMaHang().equals(ma)) {
+            if (dsHangHangKhong[i].getMaHangHK().equals(ma)) {
                 return i;
             }
         }

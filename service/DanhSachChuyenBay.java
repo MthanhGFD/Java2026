@@ -33,11 +33,10 @@ public class DanhSachChuyenBay {
 
                 ChuyenBay cb = new ChuyenBay();
                 cb.setMaChuyenBay(tokens[0]);
-                cb.setDiemKhoiHanh(tokens[1]);
-                cb.setDiemDen(tokens[2]);
-                cb.setNgayKhoiHanh(tokens[3]);
-                cb.setGioKhoiHanh(tokens[4]);
-                cb.setTinhTrang(tokens[5]);
+                cb.setMaSanBayDi(tokens[1]);
+                cb.setMaSanBayDen(tokens[2]);
+                cb.setGioBay(tokens[3]);
+                cb.setGioDen(tokens[4]);
 
                 them(cb);
             }
@@ -125,14 +124,14 @@ public class DanhSachChuyenBay {
     }
 
     // Tìm theo điểm đến
-    public ChuyenBay[] timDiemDen(String diemDen) {
+    public ChuyenBay[] timSanBayDen(String sbDen) {
 
         ChuyenBay[] ketQua = new ChuyenBay[0];
         int j = 0;
 
         for (int i = 0; i < soLuong; i++) {
 
-            if (dsChuyenBay[i].getDiemDen().equalsIgnoreCase(diemDen)) {
+            if (dsChuyenBay[i].getMaSanBayDen().equalsIgnoreCase(sbDen)) {
 
                 ketQua = Arrays.copyOf(ketQua, j + 1);
                 ketQua[j] = dsChuyenBay[i];
@@ -151,7 +150,7 @@ public class DanhSachChuyenBay {
 
         for (int i = 0; i < soLuong; i++) {
 
-            if (dsChuyenBay[i].getNgayKhoiHanh().equals(ngay)) {
+            if (dsChuyenBay[i].getNgayBay().equals(ngay)) {
 
                 ketQua = Arrays.copyOf(ketQua, j + 1);
                 ketQua[j] = dsChuyenBay[i];
