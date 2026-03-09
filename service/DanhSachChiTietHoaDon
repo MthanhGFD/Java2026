@@ -1,0 +1,127 @@
+package service;
+
+import model.ChiTietHoaDon;
+import java.io.*;
+import java.util.Arrays;
+
+public class DanhSachChiTietHoaDon {
+
+    private ChiTietHoaDon[] dsCTHD;
+    private int soLuong;
+
+    public DanhSachChiTietHoaDon() {
+        dsCTHD = new ChiTietHoaDon[0];
+        soLuong = 0;
+    }
+
+    public int getSoLuong() {
+        return soLuong;
+    }
+
+    public ChiTietHoaDon[] getDSCTHD() {
+        return Arrays.copyOf(dsCTHD, soLuong);
+    }
+
+    // ================= DOC FILE (5 CỘT) =================
+    public void docFile(String tenFile) {
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(tenFile));
+            String line;
+
+            while ((line = br.readLine()) != null) {
+                String[] tokens = line.split(",");
+                // Kiểm tra đủ 5 cột dữ liệu
+                if (tokens.length >= 5) {
+                    ChiTietHoaDon ct = new ChiTietHoaDon();
+                    ct.setMaHD(tokens[0]);
+                    ct.setMaKH(tokens[1]);
+                    ct.setMaVe(tokens[2]);
+                    ct.setGiaVe(Double.parseDouble(tokens[3]));
+                    ct.setGiaSauKhiGiam(Double.parseDouble(tokens[4]));
+
+                    them(ct);
+                }
+            }
+            br.close();
+        } catch (Exception e) {
+            System.out.println("Loi doc file chi tiet hoa don");
+        }
+    }
+
+    // ================= GHI FILE (5 CỘT) =================
+    public void ghiFile(String tenFile) {
+        try {
+            BufferedWriter bw = new BufferedWriter(new FileWriter(tenFile));
+            for (int i = 0; i < soLuong; i++) {
+                ChiTietHoaDon ct = dsCTHD[i];
+                bw.write(ct.getMaHD() + "," +
+                        ct.getMaKH() + "," +
+                        ct.getMaVe() + "," +
+                        ct.getGiaVe() + "," +
+                        ct.getGiaSauKhiGiam());
+                bw.newLine();
+            }
+            bw.close();
+        } catch (Exception e) {
+            System.out.println("Loi ghi file chi tiet hoa don");
+        }
+    }
+
+    // ================= THEM =================
+    public void them(ChiTietHoaDon ct) {
+        if (timTheoMaHD(ct.getMaHD()) != null) return;
+
+        dsCTHD = Arrays.copyOf(dsCTHD, soLuong + 1);
+        dsCTHD[soLuong] = ct;
+        soLuong++;
+    }
+
+    // ================= XOA =================
+    public void xoa(String maHD) {
+        int vt = timViTri(maHD);
+        if (vt == -1) return;
+
+        for (int i = vt; i < soLuong - 1; i++) {
+            dsCTHD[i] = dsCTHD[i + 1];
+        }
+        dsCTHD = Arrays.copyOf(dsCTHD, soLuong - 1);
+        soLuong--;
+    }
+
+    public void sua(ChiTietHoaDon ctMoi) {
+        int vitri = timViTri(ctMoi.getMaHD());
+        if (vitri != -1) {
+            dsCTHD[vitri] = ctMoi;
+            System.out.println("Sửa thành công hóa đơn: " + ctMoi.getMaHD());
+        } else {
+            System.out.println("Không tìm thấy mã hóa đơn để sửa!");
+        }
+    }
+
+    // ================= TIM KIEM =================
+    public ChiTietHoaDon timTheoMaHD(String maHD) {
+        for (int i = 0; i < soLuong; i++) {
+            if (dsCTHD[i].getMaHD().equalsIgnoreCase(maHD))
+                return dsCTHD[i];
+        }
+        return null;
+    }
+
+    public int timViTri(String maHD) {
+        for (int i = 0; i < soLuong; i++) {
+            if (dsCTHD[i].getMaHD().equalsIgnoreCase(maHD))
+                return i;
+        }
+        return -1;
+    }
+
+    // Tìm tất cả chi tiết hóa đơn của một khách hàng
+    public DanhSachChiTietHoaDon timTheoMaKH(String maKH) {
+        DanhSachChiTietHoaDon kq = new DanhSachChiTietHoaDon();
+        for (int i = 0; i < soLuong; i++) {
+            if (dsCTHD[i].getMaKH().equalsIgnoreCase(maKH))
+                kq.them(dsCTHD[i]);
+        }
+        return kq;
+    }
+}
