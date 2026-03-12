@@ -1,0 +1,21 @@
+package BUS;
+
+import DAO.HangHangKhongDAO;
+import model.HangHangKhong;
+import java.util.ArrayList;
+
+public class HangHangKhongBUS {
+    private ArrayList<HangHangKhong> listHHK;
+    private HangHangKhongDAO dao = new HangHangKhongDAO();
+
+    public HangHangKhongBUS() { listHHK = dao.selectAll(); }
+
+    public ArrayList<HangHangKhong> getAll() { return listHHK; }
+
+    public HangHangKhong getByTen(String ten) {
+        for (HangHangKhong h : listHHK) {
+            if (h.getTenHangHK().equalsIgnoreCase(ten)) return h;
+        }
+        return null;
+    }
+}
