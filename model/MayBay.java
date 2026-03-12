@@ -1,17 +1,19 @@
 package model;
 
 public class MayBay {
-     String maMayBay;
-     String tenMayBay;
-     int soGhe;
+    private String maMayBay;
+    private String maHangHangKhong;
+    private String tenMayBay;
+    private int soGhe;
 
     // 1. Constructor rỗng
     public MayBay() {
     }
 
     // 2. Constructor đầy đủ
-    public MayBay(String maMayBay, String tenMayBay, int soGhe) {
+    public MayBay(String maMayBay, String maHangHangKhong, String tenMayBay, int soGhe) {
         this.maMayBay = maMayBay;
+        this.maHangHangKhong = maHangHangKhong;
         this.tenMayBay = tenMayBay;
         this.soGhe = soGhe;
     }
@@ -26,12 +28,16 @@ public class MayBay {
     public int getSoGhe() { return soGhe; }
     public void setSoGhe(int soGhe) { this.soGhe = soGhe; }
 
+    public String getMaHangHangKhong() { return maHangHangKhong; }
+    public void setMaHangHangKhong(String maHangHangKhong) { this.maHangHangKhong = maHangHangKhong; }
+
     @Override
     public String toString() {
         return "MayBay{" +
-                "Mã='" + maMayBay + '\'' +
-                ", Tên='" + tenMayBay + '\'' +
-                ", Số Chỗ Ngồi=" + soGhe +
+                "Mã MB='" + maMayBay + '\'' +
+                ", Mã Hãng='" + maHangHangKhong + '\'' +
+                ", Tên MB='" + tenMayBay + '\'' +
+                ", Số ghế=" + soGhe +
                 '}';
     }
 }

@@ -2,19 +2,19 @@ package model;
 
 
 public class ChuyenBay{
-   String maChuyenBay;
-   String maMayBay;
-   String maHangHangKhong;
-   String maSanBayDi;
-   String maSanBayDen;
-   String NgayBay;
-   String GioBay;
-   String GioDen; //Du Kien
+   private String maChuyenBay;
+   private String maMayBay;
+   private String maHangHangKhong;
+   private String maSanBayDi;
+   private String maSanBayDen;
+   private String NgayBay;
+   private String GioBay;
+   private String GioDen; //Du Kien
    
-   int TongSoVe;
-    int SoVeDaBan;
-    int SoVeConLai;
-    long TienVeThuVe;
+   private int TongSoVe;
+   private int SoVeDaBan;
+   private int SoVeConLai;
+   private long TienVeThuVe;
 
     public ChuyenBay(){}    
     

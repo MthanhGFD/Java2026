@@ -1,0 +1,28 @@
+package BUS;
+
+import DAO.VeDAO;
+import model.Ve;
+import java.util.ArrayList;
+
+public class VeBUS {
+    private ArrayList<Ve> listVe;
+    private VeDAO veDAO = new VeDAO();
+
+    public VeBUS() {
+        listVe = veDAO.selectAll();
+    }
+
+    public ArrayList<Ve> getAll() {
+        return listVe;
+    }
+
+    public ArrayList<Ve> findByChuyenBay(String maCB) {
+        ArrayList<Ve> kq = new ArrayList<>();
+        for (Ve v : listVe) {
+            if (v.getMaChuyenBay().equalsIgnoreCase(maCB)) {
+                kq.add(v);
+            }
+        }
+        return kq;
+    }
+}

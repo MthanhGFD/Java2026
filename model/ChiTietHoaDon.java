@@ -1,65 +1,52 @@
 package model;
 
 public class ChiTietHoaDon {
-
-    private String maChiTiet;     
-    private String maHoaDon;      
-    private String tenHanhKhach;  
-    private String loaiVe;        
-    private String soGhe;
+  
+    private String maHoaDon;  
+    private String maKhachHang;
+    private String maVe;
     private double giaVe;
-    private String ghiChu;
+    private double giaVeGiam;
 
     // ===== Constructor rỗng =====
     public ChiTietHoaDon() {
     }
 
     // ===== Constructor đầy đủ =====
-    public ChiTietHoaDon(String maChiTiet, String maHoaDon,
-                         String tenHanhKhach, String loaiVe,
-                         String soGhe, double giaVe, String ghiChu) {
-        this.maChiTiet = maChiTiet;
+    public ChiTietHoaDon(String maHoaDon, String maKhachHang ,String maVe, double giaVe, double giaVeGiam) {
         this.maHoaDon = maHoaDon;
-        this.tenHanhKhach = tenHanhKhach;
-        this.loaiVe = loaiVe;
-        this.soGhe = soGhe;
+        this.maKhachHang = maKhachHang;
+        this.maVe = maVe;
         this.giaVe = giaVe;
-        this.ghiChu = ghiChu;
+        this.giaVeGiam = giaVeGiam;
     }
 
     // ===== Getter & Setter =====
 
-    public String getMaChiTiet() { return maChiTiet; }
-    public void setMaChiTiet(String maChiTiet) { this.maChiTiet = maChiTiet; }
-
     public String getMaHoaDon() { return maHoaDon; }
     public void setMaHoaDon(String maHoaDon) { this.maHoaDon = maHoaDon; }
 
-    public String getTenHanhKhach() { return tenHanhKhach; }
-    public void setTenHanhKhach(String tenHanhKhach) { this.tenHanhKhach = tenHanhKhach; }
+    public String getMaKhachHang() { return maKhachHang; }
+    public void setMaKhachHang(String maKhachHang) { this.maKhachHang = maKhachHang; }
 
-    public String getLoaiVe() { return loaiVe; }
-    public void setLoaiVe(String loaiVe) { this.loaiVe = loaiVe; }
-
-    public String getSoGhe() { return soGhe; }
-    public void setSoGhe(String soGhe) { this.soGhe = soGhe; }
+    public String getMaVe() { return maVe; }
+    public void setMaVe(String maVe) { this.maVe = maVe; }
 
     public double getGiaVe() { return giaVe; }
     public void setGiaVe(double giaVe) { this.giaVe = giaVe; }
 
-    public String getGhiChu() { return ghiChu; }
-    public void setGhiChu(String ghiChu) { this.ghiChu = ghiChu; }
+    public double getGiaVeGiam() { return giaVeGiam; }
+    public void setGiaVeGiam(double giaVeGiam) { this.giaVeGiam = giaVeGiam; }
 
     // ===== Hiển thị chi tiết =====
     @Override
     public String toString() {
         return "ChiTietHoaDon{" +
-                "Mã CT='" + maChiTiet + '\'' +
-                ", Mã HĐ='" + maHoaDon + '\'' +
-                ", Hành khách='" + tenHanhKhach + '\'' +
-                ", Loại vé='" + loaiVe + '\'' +
-                ", Ghế='" + soGhe + '\'' +
-                ", Giá vé=" + giaVe +
+                "maHoaDon='" + maHoaDon + '\'' +
+                ", maKhachHang='" + maKhachHang + '\'' +
+                ", maVe='" + maVe + '\'' +
+                ", giaVe=" + giaVe +
+                ", giaVeGiam=" + giaVeGiam +
                 '}';
     }
 
