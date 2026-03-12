@@ -46,9 +46,7 @@ public class DanhSachHangHangKhong {
         }
     }
 
-    // =========================
     // Ghi file
-    // =========================
     public void ghiFile(String tenFile) {
 
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(tenFile))) {

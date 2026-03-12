@@ -1,9 +1,9 @@
 package model;
 
 public class HangHangKhong {
-    String maHangHK;
-    String tenHangHK;
-    String quocGia;
+    private String maHangHK;
+    private String tenHangHK;
+    private String quocGia;
 
     // 1. Constructor rỗng
     public HangHangKhong() {
