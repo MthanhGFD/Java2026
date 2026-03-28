@@ -1,11 +1,11 @@
 package model;
 
 public class CTKM {
-    String maCTKM;
-    String tenCTKM;
-    String ngayBD;
-    String ngayKT;
-    String noiDung;
+    private String maCTKM;
+    private String tenCTKM;
+    private String ngayBD;
+    private String ngayKT;
+    private String noiDung;
 
     public CTKM() {
     }
@@ -32,5 +32,4 @@ public class CTKM {
 
     public String getNoiDung() { return noiDung; }
     public void setNoiDung(String noiDung) { this.noiDung = noiDung; }
-    
 }
