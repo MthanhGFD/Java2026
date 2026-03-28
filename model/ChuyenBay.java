@@ -13,8 +13,7 @@ public class ChuyenBay{
    
    private int TongSoVe;
    private int SoVeDaBan;
-   @SuppressWarnings("unused")
-    private int SoVeConLai;
+   private int SoVeConLai;
    private long TienVeThuVe;
 
     public ChuyenBay(){}    

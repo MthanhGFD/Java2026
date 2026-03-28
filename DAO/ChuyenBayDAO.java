@@ -4,8 +4,6 @@ import model.ChuyenBay;
 import java.sql.*;
 import java.util.ArrayList;
 
-import database.DBConnection;
-
 public class ChuyenBayDAO {
     public ArrayList<ChuyenBay> selectAll() {
         ArrayList<ChuyenBay> ds = new ArrayList<>();
