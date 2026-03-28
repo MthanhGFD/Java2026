@@ -1,4 +1,11 @@
+# Compiled files
+*.class
+
 # IntelliJ / JetBrains
 /.idea/
 /*.iml
 /out/
+
+# Build output
+bin/
+target/
