@@ -16,7 +16,7 @@ public class DBConnection {
 
             Connection conn = DriverManager.getConnection(url, user, password);
 
-            System.out.println("Thanh cong");
+            System.out.println("Kết nối thành công");
             return conn;
 
         } catch (Exception e) {
