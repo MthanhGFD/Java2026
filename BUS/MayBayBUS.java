@@ -8,13 +8,13 @@ public class MayBayBUS {
     private ArrayList<MayBay> listMB;
     private MayBayDAO mbDAO = new MayBayDAO();
 
-    public MayBayBUS() { listMB = mbDAO.selectAll(); }
+    public MayBayBUS() { listMB = mbDAO.docTatCa(); }
 
     public ArrayList<MayBay> getAll() { return listMB; }
 
     public String add(MayBay mb) {
         if (getById(mb.getMaMayBay()) != null) return "Mã máy bay đã tồn tại!";
-        if (mbDAO.insert(mb)) {
+        if (mbDAO.them(mb)) {
             listMB.add(mb);
             return "Thêm thành công!";
         }

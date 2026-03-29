@@ -3,17 +3,18 @@ package DAO;
 import model.KhachHang;
 import java.sql.*;
 import java.util.ArrayList;
-
 import database.DBConnection;
 
 public class KhachHangDAO {
-    // Lấy toàn bộ danh sách từ DB (Thay cho docFile)
-    public ArrayList<KhachHang> selectAll() {
+    
+    // 1. ĐỌC TẤT CẢ
+    public ArrayList<KhachHang> docTatCa() {
         ArrayList<KhachHang> ds = new ArrayList<>();
-        try (Connection conn = DBConnection.getConnection()) {
-            String sql = "SELECT * FROM KhachHang";
-            PreparedStatement pst = conn.prepareStatement(sql);
-            ResultSet rs = pst.executeQuery();
+        String sql = "SELECT * FROM KhachHang";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement pst = conn.prepareStatement(sql);
+             ResultSet rs = pst.executeQuery()) {
+            
             while (rs.next()) {
                 KhachHang kh = new KhachHang(
                     rs.getString("maKhachHang"),
@@ -25,24 +26,91 @@ public class KhachHangDAO {
                 );
                 ds.add(kh);
             }
-        } catch (SQLException e) { e.printStackTrace(); }
+        } catch (SQLException e) { 
+            System.out.println("Lỗi load danh sách KhachHang: " + e.getMessage());
+            e.printStackTrace(); 
+        }
         return ds;
     }
 
-    // Thêm vào DB (Thay cho logic mảng trong hàm them)
-    public boolean insert(KhachHang kh) {
-        try (Connection conn = DBConnection.getConnection()) {
-            String sql = "INSERT INTO KhachHang VALUES (?, ?, ?, ?, ?, ?)";
-            PreparedStatement pst = conn.prepareStatement(sql);
+    // 2. THÊM (Đã liệt kê tên cột cho an toàn)
+    public boolean them(KhachHang kh) {
+        String sql = "INSERT INTO KhachHang (maKhachHang, ho, ten, ngaySinh, soDienThoai, email) VALUES (?, ?, ?, ?, ?, ?)";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement pst = conn.prepareStatement(sql)) {
+            
             pst.setString(1, kh.getMaKhachHang());
             pst.setString(2, kh.getHo());
             pst.setString(3, kh.getTen());
             pst.setString(4, kh.getNgaySinh());
             pst.setString(5, kh.getSoDienThoai());
             pst.setString(6, kh.getEmail());
+            
             return pst.executeUpdate() > 0;
-        } catch (SQLException e) { return false; }
+        } catch (SQLException e) { 
+            System.out.println("Lỗi thêm KhachHang: " + e.getMessage());
+            return false; 
+        }
     }
-    
-    // Tương tự viết cho update(KhachHang kh) và delete(String ma)
+
+    // 3. SỬA (Cập nhật 5 trường, giữ nguyên khóa chính)
+    public boolean sua(KhachHang kh) {
+        String sql = "UPDATE KhachHang SET ho=?, ten=?, ngaySinh=?, soDienThoai=?, email=? WHERE maKhachHang=?";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement pst = conn.prepareStatement(sql)) {
+            
+            pst.setString(1, kh.getHo());
+            pst.setString(2, kh.getTen());
+            pst.setString(3, kh.getNgaySinh());
+            pst.setString(4, kh.getSoDienThoai());
+            pst.setString(5, kh.getEmail());
+            // Mã khách hàng nằm ở dấu ? cuối cùng (số 6)
+            pst.setString(6, kh.getMaKhachHang());
+            
+            return pst.executeUpdate() > 0;
+        } catch (SQLException e) { 
+            System.out.println("Lỗi sửa KhachHang: " + e.getMessage());
+            return false; 
+        }
+    }
+
+    // 4. XÓA
+    public boolean xoa(String maKH) {
+        String sql = "DELETE FROM KhachHang WHERE maKhachHang = ?";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement pst = conn.prepareStatement(sql)) {
+            
+            pst.setString(1, maKH);
+            
+            return pst.executeUpdate() > 0;
+        } catch (SQLException e) { 
+            System.out.println("Lỗi xóa KhachHang: " + e.getMessage());
+            return false; 
+        }
+    }
+
+    // 5. TÌM THEO MÃ
+    public KhachHang timTheoMa(String maKH) {
+        String sql = "SELECT * FROM KhachHang WHERE maKhachHang = ?";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement pst = conn.prepareStatement(sql)) {
+            
+            pst.setString(1, maKH);
+            ResultSet rs = pst.executeQuery();
+            
+            if (rs.next()) {
+                return new KhachHang(
+                    rs.getString("maKhachHang"),
+                    rs.getString("ho"),
+                    rs.getString("ten"),
+                    rs.getString("ngaySinh"),
+                    rs.getString("soDienThoai"),
+                    rs.getString("email")
+                );
+            }
+        } catch (SQLException e) { 
+            System.out.println("Lỗi tìm kiếm KhachHang: " + e.getMessage());
+        }
+        return null;
+    }
 }
