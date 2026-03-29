@@ -1,110 +1,53 @@
-# 📌 ĐỒ ÁN HỌC PHẦN JAVA
+# 📌 ĐỒ ÁN HỌC PHẦN JAVA  
 ## ✈️ HỆ THỐNG QUẢN LÝ BÁN VÉ MÁY BAY
 
 ---
 
 ## 📖 Giới thiệu
-Đây là đồ án học phần **Java**, xây dựng hệ thống **quản lý bán vé máy bay**, áp dụng lập trình hướng đối tượng (OOP), quản lý dữ liệu và làm việc nhóm với **Git**.
+Đây là đồ án học phần **Java**, xây dựng hệ thống **quản lý bán vé máy bay**, áp dụng lập trình hướng đối tượng (OOP), quản lý dữ liệu và làm việc nhóm với **Git** (được ChatGPT hỗ trợ làm đẹp README 🐧).
+
+---
+
+## 🧩 Các phân hệ chức năng
+1. **Chuyến bay**
+2. **Sân bay**
+3. **Địa điểm**
+4. **Hãng hàng không**
+5. **Máy bay**
+6. **Vé**
+7. **Khách hàng**
+8. **Hóa đơn**
+9. **Chi tiết hóa đơn**
+10. **Chương trình khuyến mãi (CTKM)**
+11. **Chi tiết CTKM**
+12. **CTKM (Hóa đơn)**
 
 ---
 
 ## 🏗️ Kiến trúc chương trình
-```
-src/
-├── main/
-│   ├── java/
-│   │   ├── config/          # Cấu hình database
-│   │   ├── database/        # Kết nối database
-│   │   ├── exception/       # Xử lý ngoại lệ
-│   │   ├── model/           # Các entity class
-│   │   ├── DAO/             # Data Access Objects
-│   │   ├── BUS/             # Business Logic
-│   │   ├── gui/             # Giao diện người dùng
-│   │   └── utils/           # Các tiện ích
-│   └── resources/           # Cấu hình, properties
-└── test/                    # Unit tests
-```
+- **Model**: Các class đối tượng (Entity)
+- **Service**: Danh sách & xử lý dữ liệu
+- **Manage**: Quản lý nghiệp vụ, điều phối chức năng
+- **Data**: Dữ liệu để chạy đồ án
+- **GUI**: Giao diện người dùng
+- **Main**: Hàm main
 
 ---
 
-## 🚀 Cài đặt và Chạy
+## 🛠️ Hướng dẫn làm việc với Git & VS Code
 
-### 📋 Yêu cầu hệ thống
-- **Java**: JDK 11+
-- **Database**: MySQL 8.0+
-- **Build Tool**: Maven 3.6+
+### 🔹 Mở dự án
+1. Tạo thư mục chứa đồ án:
+  - Chuột phải -> mở git bash
+  - Gõ lệnh: git clone https://github.com/MthanhGFD/Java2026
+2. Mở thư mục **Java2026**
+3. Chuột phải → **Open Git Bash here**
+4. Gõ lệnh: code .
 
-### 🛠️ Hướng dẫn setup
-
-1. **Clone project**:
-   ```bash
-   git clone https://github.com/MthanhGFD/Java2026
-   cd Java2026
-   ```
-
-2. **Cấu hình database**:
-   - Tạo database MySQL: `quanlychuyenbay`
-   - Import dữ liệu từ file `data/database.sql`
-   - Cập nhật thông tin kết nối trong `src/main/resources/db.properties`
-
-3. **Build project**:
-   ```bash
-   mvn clean compile
-   ```
-
-4. **Chạy ứng dụng**:
-   ```bash
-   mvn exec:java -Dexec.mainClass="gui.GUI"
-   ```
-
-5. **Chạy test**:
-   ```bash
-   mvn test
-   ```
-
----
-
-## 📊 Chức năng chính
-
-### 👥 Quản lý Khách hàng
-- Thêm, sửa, xóa khách hàng
-- Tìm kiếm theo tên/SĐT
-- Xem lịch sử đặt vé
-
-### ✈️ Quản lý Chuyến bay
-- Quản lý thông tin chuyến bay
-- Cập nhật trạng thái chuyến bay
-- Tra cứu lịch bay
-
-### 🎫 Quản lý Vé & Hóa đơn
-- Đặt vé online
-- Xuất hóa đơn
-- Thống kê doanh thu
-
-### 📈 Báo cáo & Thống kê
-- Thống kê chuyến bay
-- Báo cáo doanh thu
-- Xuất báo cáo Excel/PDF
-
----
-
-## 🔧 Công nghệ sử dụng
-- **Backend**: Java 11, JDBC
-- **Database**: MySQL
-- **GUI**: Swing
-- **Build**: Maven
-- **Version Control**: Git
-
----
-
-## 👥 Đội ngũ phát triển
-- **Thành viên**: [Tên các thành viên]
-- **Giảng viên**: [Tên giảng viên]
-
----
-
-## 📝 License
-This project is for educational purposes only.
+# Các lệnh git
+- git checkout <tên_nhánh>    ---    // BẮT BUỘC làm đầu tiên
+- git add .    ---    // Thêm tất cả file đã chỉnh sửa
+- git commit -m "Mô tả thay đổi"
 - git push origin <tên_nhánh>    ---   // Đẩy code lên nhánh cá nhân
 - git pull origin main    ---    // Lấy code mới nhất từ nhánh chính
 
