@@ -1,28 +1,26 @@
 package DAO;
 
-import model.CTKM;
+import model.CTKMHoaDon; 
 import database.DBConnection;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
-public class CTKMDAO {
+public class CTKMHoaDonDAO {
 
-    // 1. ĐỌC
-    public ArrayList<CTKM> docTatCa() {
-        ArrayList<CTKM> list = new ArrayList<>();
-        String sql = "SELECT * FROM CTKM";
+    // 1. ĐỌC TẤT CẢ
+    public ArrayList<CTKMHoaDon> docTatCa() {
+        ArrayList<CTKMHoaDon> list = new ArrayList<>();
+        String sql = "SELECT * FROM CTKM_HOADON"; 
         try (Connection con = DBConnection.getConnection();
              PreparedStatement pst = con.prepareStatement(sql);
              ResultSet rs = pst.executeQuery()) {
             while (rs.next()) {
-                CTKM ct = new CTKM();
+                CTKMHoaDon ct = new CTKMHoaDon();
                 ct.setMaCTKM(rs.getString("maCTKM"));
-                ct.setTenCTKM(rs.getString("tenCTKM"));
-                ct.setNgayBD(rs.getString("ngayBD"));
-                ct.setNgayKT(rs.getString("ngayKT"));
-                ct.setNoiDung(rs.getString("noiDung"));
+                ct.setMaHD(rs.getString("maHD"));
+                ct.setGiaTriKM(rs.getDouble("giaTriKM"));
                 list.add(ct);
             }
         } catch (Exception e) {
@@ -32,15 +30,13 @@ public class CTKMDAO {
     }
 
     // 2. THÊM
-    public boolean them(CTKM ct) {
-        String sql = "INSERT INTO CTKM (maCTKM, tenCTKM, ngayBD, ngayKT, noiDung) VALUES (?, ?, ?, ?, ?)";
+    public boolean them(CTKMHoaDon ct) {
+        String sql = "INSERT INTO CTKM_HOADON (maCTKM, maHD, giaTriKM) VALUES (?, ?, ?)";
         try (Connection con = DBConnection.getConnection();
              PreparedStatement pst = con.prepareStatement(sql)) {
             pst.setString(1, ct.getMaCTKM());
-            pst.setString(2, ct.getTenCTKM());
-            pst.setString(3, ct.getNgayBD());
-            pst.setString(4, ct.getNgayKT());
-            pst.setString(5, ct.getNoiDung());
+            pst.setString(2, ct.getMaHD());
+            pst.setDouble(3, ct.getGiaTriKM());
             return pst.executeUpdate() > 0;
         } catch (Exception e) {
             e.printStackTrace();
@@ -48,12 +44,13 @@ public class CTKMDAO {
         return false;
     }
 
-    // 3. XÓA
-    public boolean xoa(String maCTKM) {
-        String sql = "DELETE FROM CTKM WHERE maCTKM = ?";
+    // 3. XÓA (Dựa vào 2 khóa chính)
+    public boolean xoa(String maCTKM, String maHD) {
+        String sql = "DELETE FROM CTKM_HOADON WHERE maCTKM = ? AND maHD = ?";
         try (Connection con = DBConnection.getConnection();
              PreparedStatement pst = con.prepareStatement(sql)) {
             pst.setString(1, maCTKM);
+            pst.setString(2, maHD);
             return pst.executeUpdate() > 0;
         } catch (Exception e) {
             e.printStackTrace();
@@ -61,16 +58,14 @@ public class CTKMDAO {
         return false;
     }
 
-    // 4. SỬA
-    public boolean sua(CTKM ct) {
-        String sql = "UPDATE CTKM SET tenCTKM=?, ngayBD=?, ngayKT=?, noiDung=? WHERE maCTKM=?";
+    // 4. SỬA (Cập nhật giá trị khuyến mãi cho hóa đơn đó)
+    public boolean sua(CTKMHoaDon ct) {
+        String sql = "UPDATE CTKM_HOADON SET giaTriKM = ? WHERE maCTKM = ? AND maHD = ?";
         try (Connection con = DBConnection.getConnection();
              PreparedStatement pst = con.prepareStatement(sql)) {
-            pst.setString(1, ct.getTenCTKM());
-            pst.setString(2, ct.getNgayBD());
-            pst.setString(3, ct.getNgayKT());
-            pst.setString(4, ct.getNoiDung());
-            pst.setString(5, ct.getMaCTKM());
+            pst.setDouble(1, ct.getGiaTriKM());
+            pst.setString(2, ct.getMaCTKM());
+            pst.setString(3, ct.getMaHD());
             return pst.executeUpdate() > 0;
         } catch (Exception e) {
             e.printStackTrace();
@@ -78,20 +73,20 @@ public class CTKMDAO {
         return false;
     }
 
-    // 5. TÌM THEO MÃ 
-    public CTKM timTheoMa(String maCTKM) {
-        String sql = "SELECT * FROM CTKM WHERE maCTKM = ?";
+    // 5. TÌM THEO MÃ
+    public CTKMHoaDon timTheoMa(String maCTKM, String maHD) {
+        String sql = "SELECT * FROM CTKM_HOADON WHERE maCTKM = ? AND maHD = ?";
         try (Connection con = DBConnection.getConnection();
              PreparedStatement pst = con.prepareStatement(sql)) {
             pst.setString(1, maCTKM);
+            pst.setString(2, maHD);
             ResultSet rs = pst.executeQuery();
+            
             if (rs.next()) {
-                CTKM ct = new CTKM();
+                CTKMHoaDon ct = new CTKMHoaDon();
                 ct.setMaCTKM(rs.getString("maCTKM"));
-                ct.setTenCTKM(rs.getString("tenCTKM"));
-                ct.setNgayBD(rs.getString("ngayBD"));
-                ct.setNgayKT(rs.getString("ngayKT"));
-                ct.setNoiDung(rs.getString("noiDung"));
+                ct.setMaHD(rs.getString("maHD"));
+                ct.setGiaTriKM(rs.getDouble("giaTriKM"));
                 return ct;
             }
         } catch (Exception e) {
