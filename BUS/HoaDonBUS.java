@@ -9,7 +9,7 @@ public class HoaDonBUS {
     private HoaDonDAO hdDAO = new HoaDonDAO();
 
     public HoaDonBUS() {
-        listHD = hdDAO.selectAll();
+        listHD = hdDAO.docTatCa();
     }
 
     public ArrayList<HoaDon> getAll() {
@@ -20,7 +20,7 @@ public class HoaDonBUS {
         if (getById(hd.getMaHoaDon()) != null) {
             return "Ma hoa don da ton tai!";
         }
-        if (hdDAO.insert(hd)) {
+        if (hdDAO.them(hd)) {
             listHD.add(hd);
             return "Them hoa don thanh cong!";
         }
@@ -28,7 +28,7 @@ public class HoaDonBUS {
     }
 
     public String delete(String maHD) {
-        if (hdDAO.delete(maHD)) {
+        if (hdDAO.xoa(maHD)) {
             listHD.removeIf(hd -> hd.getMaHoaDon().equalsIgnoreCase(maHD));
             return "Xoa thanh cong!";
         }

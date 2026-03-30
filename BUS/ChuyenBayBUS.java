@@ -8,7 +8,7 @@ public class ChuyenBayBUS {
     private ArrayList<ChuyenBay> listCB;
     private ChuyenBayDAO cbDAO = new ChuyenBayDAO();
 
-    public ChuyenBayBUS() { listCB = cbDAO.selectAll(); }
+    public ChuyenBayBUS() { listCB = cbDAO.docTatCa(); }
 
     public ArrayList<ChuyenBay> getAll() { return listCB; }
 

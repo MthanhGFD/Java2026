@@ -9,10 +9,10 @@ import java.util.ArrayList;
 
 public class DiaDiemDAO {
 
-    // 1. ĐỌC TẤT CẢ DỮ LIỆU
+    // 1. ĐỌC
     public ArrayList<DiaDiem> docTatCa() {
         ArrayList<DiaDiem> list = new ArrayList<>();
-        String sql = "SELECT * FROM DiaDiem"; // Sửa tên bảng nếu MySQL của bạn đặt khác
+        String sql = "SELECT * FROM DiaDiem";
         
         try (Connection con = DBConnection.getConnection();
              PreparedStatement pst = con.prepareStatement(sql);
@@ -22,7 +22,6 @@ public class DiaDiemDAO {
                 DiaDiem dd = new DiaDiem();
                 dd.setMaDiaDiem(rs.getString("maDiaDiem"));
                 dd.setTenDiaDiem(rs.getString("tenDiaDiem"));
-                // Bổ sung lấy dữ liệu Quốc Gia từ CSDL
                 dd.setQuocGia(rs.getString("QuocGia")); 
                 list.add(dd);
             }

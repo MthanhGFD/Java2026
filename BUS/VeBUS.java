@@ -9,7 +9,7 @@ public class VeBUS {
     private VeDAO veDAO = new VeDAO();
 
     public VeBUS() {
-        listVe = veDAO.selectAll();
+        listVe = veDAO.docTatCa();
     }
 
     public ArrayList<Ve> getAll() {

@@ -8,7 +8,7 @@ import database.DBConnection;
 public class ChuyenBayDAO {
 
     // 1. LẤY TẤT CẢ DANH SÁCH (Đọc)
-    public ArrayList<ChuyenBay> selectAll() {
+    public ArrayList<ChuyenBay> docTatCa() {
         ArrayList<ChuyenBay> ds = new ArrayList<>();
         String sql = "SELECT * FROM ChuyenBay";
         try (Connection conn = DBConnection.getConnection();
@@ -116,4 +116,25 @@ public class ChuyenBayDAO {
         }
         return null;
     }
+    public ArrayList<Object[]> thongKeHanhKhach() {
+    ArrayList<Object[]> list = new ArrayList<>();
+    // SQL: Kết nối bảng Chuyến Bay với bảng Vé để đếm số vé đã bán (hành khách)
+    String sql = "SELECT cb.maChuyenBay, cb.maSanBayDi, cb.maSanBayDen, cb.ngayBay, COUNT(ve.maVe) as soKhach " +
+                 "FROM ChuyenBay cb LEFT JOIN Ve ve ON cb.maChuyenBay = ve.maChuyenBay " +
+                 "GROUP BY cb.maChuyenBay";
+    try (Connection con = DBConnection.getConnection();
+         PreparedStatement pst = con.prepareStatement(sql);
+         ResultSet rs = pst.executeQuery()) {
+        while (rs.next()) {
+            list.add(new Object[]{
+                rs.getString("maChuyenBay"),
+                rs.getString("maSanBayDi"),
+                rs.getString("maSanBayDen"),
+                rs.getString("ngayBay"),
+                rs.getInt("soKhach")
+            });
+        }
+    } catch (Exception e) { e.printStackTrace(); }
+    return list;
+}
 }
