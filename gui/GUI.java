@@ -672,44 +672,29 @@ public class GUI extends javax.swing.JFrame {
     }
 }
     private void btnTim_cbActionPerformed(java.awt.event.ActionEvent evt) {                                          
-        String maCB = JOptionPane.showInputDialog(this, "Nhập mã Chuyến Bay:");
+        String maCB = JOptionPane.showInputDialog(this, "Nhập mã Chuyến Bay cần tìm:");
 
-        if (maCB != null && !maCB.trim().isEmpty()) {
+        if (maCB != null) {
             try {
-                Connection conn = DBConnection.getConnection();
+                BUS.ChuyenBayBUS bus = new BUS.ChuyenBayBUS();
+                DAL.ChuyenBay cb = bus.timChuyenBay(maCB);
 
-                String sql = "SELECT * FROM chuyenbay WHERE maCB = ?";
-                PreparedStatement ps = conn.prepareStatement(sql);
-                ps.setString(1, maCB);
-
-                ResultSet rs = ps.executeQuery();
-
-                DefaultTableModel model = (DefaultTableModel) tbl_cb.getModel();
-                model.setRowCount(0);
-
-                if (rs.next()) {
+                if (cb != null) {
+                    javax.swing.table.DefaultTableModel model = (javax.swing.table.DefaultTableModel) tbl_cb.getModel();
+                    model.setRowCount(0);
+                    
                     model.addRow(new Object[]{
-                    rs.getString("maChuyenBay"),
-                    rs.getString("maMayBay"),
-                    rs.getString("maHangHangKhong"),
-                    rs.getString("maSanBayDi"),
-                    rs.getString("maSanBayDen"),
-                    rs.getString("NgayBay"),
-                    rs.getString("GioBay"),
-                    rs.getString("GioDen"),
-                    rs.getInt("TongSoVe"),
-                    rs.getInt("SoVeDaBan"),
-                    rs.getInt("SoVeConLai"),
-                    rs.getLong("TienVeThuVe")
+                        cb.getMaChuyenBay(), cb.getMaMayBay(), cb.getMaHangHangKhong(),
+                        cb.getMaSanBayDi(), cb.getMaSanBayDen(), cb.getNgayBay(),
+                        cb.getGioBay(), cb.getGioDen(), cb.getTongSoVe(),
+                        cb.getSoVeDaBan(), cb.getSoVeConLai(), cb.getTienVeThuVe()
                     });
+                    JOptionPane.showMessageDialog(this, "Đã tìm thấy chuyến bay!");
                 } else {
-                    JOptionPane.showMessageDialog(this, "Không tìm thấy!");
+                    JOptionPane.showMessageDialog(this, "Không tìm thấy chuyến bay nào với mã: " + maCB, "Thông báo", JOptionPane.INFORMATION_MESSAGE);
                 }
-
-                conn.close();
-
             } catch (Exception e) {
-                e.printStackTrace();
+                JOptionPane.showMessageDialog(this, e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
             }
         }
     }
