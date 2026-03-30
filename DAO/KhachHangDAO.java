@@ -1,8 +1,9 @@
 package DAO;
 
-import model.KhachHang;
 import java.sql.*;
 import java.util.ArrayList;
+
+import DAL.KhachHang;
 import database.DBConnection;
 
 public class KhachHangDAO {
@@ -53,7 +54,7 @@ public class KhachHangDAO {
         }
     }
 
-    // 3. SỬA (Cập nhật 5 trường, giữ nguyên khóa chính)
+    // 3. SỬA
     public boolean sua(KhachHang kh) {
         String sql = "UPDATE KhachHang SET ho=?, ten=?, ngaySinh=?, soDienThoai=?, email=? WHERE maKhachHang=?";
         try (Connection conn = DBConnection.getConnection();
@@ -64,7 +65,6 @@ public class KhachHangDAO {
             pst.setString(3, kh.getNgaySinh());
             pst.setString(4, kh.getSoDienThoai());
             pst.setString(5, kh.getEmail());
-            // Mã khách hàng nằm ở dấu ? cuối cùng (số 6)
             pst.setString(6, kh.getMaKhachHang());
             
             return pst.executeUpdate() > 0;

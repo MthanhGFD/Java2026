@@ -1,4 +1,4 @@
-package model;
+package DAL;
 
 public class CTKMHoaDon {
     private String maCTKM;

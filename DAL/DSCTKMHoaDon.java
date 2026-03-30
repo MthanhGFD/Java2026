@@ -1,4 +1,4 @@
-package model;
+package DAL;
 
 import java.util.ArrayList;
 

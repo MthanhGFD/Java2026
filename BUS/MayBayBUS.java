@@ -1,8 +1,10 @@
 package BUS;
 
 import DAO.MayBayDAO;
-import model.MayBay;
+
 import java.util.ArrayList;
+
+import DAL.MayBay;
 
 public class MayBayBUS {
     private ArrayList<MayBay> listMB;

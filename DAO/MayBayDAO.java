@@ -1,8 +1,9 @@
 package DAO;
 
-import model.MayBay;
 import java.sql.*;
 import java.util.ArrayList;
+
+import DAL.MayBay;
 import database.DBConnection;
 
 public class MayBayDAO {
@@ -48,7 +49,7 @@ public class MayBayDAO {
         }
     }
 
-    // 3. SỬA (Cập nhật hãng, tên máy bay và số ghế)
+    // 3. SỬA
     public boolean sua(MayBay mb) {
         String sql = "UPDATE MayBay SET maHangHangKhong=?, tenMayBay=?, soGhe=? WHERE maMayBay=?";
         try (Connection conn = DBConnection.getConnection();
@@ -57,7 +58,7 @@ public class MayBayDAO {
             pst.setString(1, mb.getMaHangHangKhong());
             pst.setString(2, mb.getTenMayBay());
             pst.setInt(3, mb.getSoGhe());
-            pst.setString(4, mb.getMaMayBay()); // Khóa chính ở cuối
+            pst.setString(4, mb.getMaMayBay());
             
             return pst.executeUpdate() > 0;
         } catch (SQLException e) { 
@@ -100,6 +101,6 @@ public class MayBayDAO {
         } catch (SQLException e) { 
             System.out.println("Lỗi tìm kiếm MayBay: " + e.getMessage());
         }
-        return null; // Không tìm thấy thì trả về null
+        return null;
     }
 }

@@ -1,8 +1,9 @@
 package DAO;
 
-import model.SanBay;
 import java.sql.*;
 import java.util.ArrayList;
+
+import DAL.SanBay;
 import database.DBConnection;
 
 public class SanBayDAO {
@@ -36,7 +37,7 @@ public class SanBayDAO {
             
             pst.setString(1, sb.getMaSanBay());
             pst.setString(2, sb.getMaDiaDiem());
-            pst.setString(3, sb.getTenSanBay()); // Đã sửa từ getTenChuyenBay() thành getTenSanBay()
+            pst.setString(3, sb.getTenSanBay());
             
             return pst.executeUpdate() > 0;
         } catch (SQLException e) {
@@ -45,7 +46,7 @@ public class SanBayDAO {
         }
     }
 
-    // 3. SỬA (Cập nhật mã địa điểm và tên sân bay)
+    // 3. SỬA
     public boolean sua(SanBay sb) {
         String sql = "UPDATE SanBay SET maDiaDiem=?, tenSanBay=? WHERE maSanBay=?";
         try (Connection conn = DBConnection.getConnection();

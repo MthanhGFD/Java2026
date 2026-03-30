@@ -188,14 +188,10 @@ public class GUI extends javax.swing.JFrame {
             }
         });
 
-        // --- BỔ SUNG LẠI NÚT NẾU LỠ XÓA MẤT ---
         javax.swing.JButton btnDoc_cb = new javax.swing.JButton("Cập Nhật");
         btnDoc_cb.addActionListener(e -> btnDoc_cbActionPerformed(e));
 
-        // --- BẮT ĐẦU ĐOẠN CODE LAYOUT MỚI MÀ BẠN VỪA DÁN ---
         jPanel4.setLayout(new java.awt.BorderLayout(0, 15)); 
-        
-        // ... (phần code FlowLayout bạn đã dán giữ nguyên)
 
         tbl_cb.setAutoCreateRowSorter(true);
         tbl_cb.setModel(new javax.swing.table.DefaultTableModel(
@@ -219,13 +215,11 @@ public class GUI extends javax.swing.JFrame {
         }
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        // --- BẮT ĐẦU ĐOẠN CODE MỚI THAY THẾ CHO GROUPLAYOUT CỦA NETBEANS ---
-        jPanel4.setLayout(new java.awt.BorderLayout(0, 15)); // Khung chính chia trên/dưới, cách nhau 15px
+        jPanel4.setLayout(new java.awt.BorderLayout(0, 15));
 
-        // 1. Tạo một Panel mới chứa toàn bộ các nút bấm nằm ngang
+        //Panel mới chứa toàn bộ các nút bấm
         javax.swing.JPanel buttonPanelCB = new javax.swing.JPanel(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 20, 10));
         
-        // 2. Thêm các nút cũ vào Panel
         buttonPanelCB.add(btnThem_cb);
         buttonPanelCB.add(btnXoa_cb);
         buttonPanelCB.add(btnSua_cb);
@@ -655,21 +649,20 @@ public class GUI extends javax.swing.JFrame {
         );
 
         pack();
-    }// </editor-fold>                        
+    }              
 
     
     // ========================= SỰ KIỆN CHO QUẢN LÝ CHUYẾN BAY ========================
     private void btnDoc_cbActionPerformed(java.awt.event.ActionEvent evt) {                                          
-    // Lấy model của bảng Chuyến Bay trong NetBeans
+
     javax.swing.table.DefaultTableModel model = (javax.swing.table.DefaultTableModel) tbl_cb.getModel();
     model.setRowCount(0); // Xóa sạch dữ liệu cũ trên bảng
     
-    // Gọi DAO lấy danh sách (Nhớ đổi docTatCa() thành selectAll() nếu DAO của bạn dùng tên đó)
     DAO.ChuyenBayDAO dao = new DAO.ChuyenBayDAO();
-    java.util.ArrayList<model.ChuyenBay> list = dao.docTatCa();
+    java.util.ArrayList<DAL.ChuyenBay> list = dao.docTatCa();
     
-    // Đổ dữ liệu mới vào
-    for (model.ChuyenBay cb : list) {
+    // Dữ liệu mới
+    for (DAL.ChuyenBay cb : list) {
         model.addRow(new Object[]{
             cb.getMaChuyenBay(), cb.getMaMayBay(), cb.getMaHangHangKhong(),
             cb.getMaSanBayDi(), cb.getMaSanBayDen(), cb.getNgayBay(),
@@ -721,14 +714,14 @@ public class GUI extends javax.swing.JFrame {
         }
     }
     private void btnSua_cbActionPerformed(java.awt.event.ActionEvent evt) {                                                                                 
-        // 1. Kiểm tra xem người dùng đã chọn dòng nào trên bảng chưa
+        // 1. Kiểm tra xem người dùng đã chọn dòng nào
         int selectedRow = tbl_cb.getSelectedRow();
         if (selectedRow == -1) {
             JOptionPane.showMessageDialog(this, "Vui lòng chọn một chuyến bay trên bảng để sửa!", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
-        // 2. Tạo Form Sửa với đủ 12 trường thông tin
+        // 2. Tạo Form Sửa
         JFrame frame = new JFrame("Sửa Thông Tin Chuyến Bay");
         frame.setLayout(new java.awt.GridLayout(0, 2, 10, 10));
         frame.setSize(450, 650);
@@ -746,11 +739,11 @@ public class GUI extends javax.swing.JFrame {
         JTextField txtSoVeConLai = new JTextField();
         JTextField txtTienVeThuVe = new JTextField();
 
-        // 3. Lấy dữ liệu từ dòng đang chọn trên bảng đắp lên Form
+        // 3. Lấy dữ liệu từ dòng đang chọn
         javax.swing.table.DefaultTableModel model = (javax.swing.table.DefaultTableModel) tbl_cb.getModel();
         
         txtMaChuyenBay.setText(model.getValueAt(selectedRow, 0) != null ? model.getValueAt(selectedRow, 0).toString() : "");
-        txtMaChuyenBay.setEditable(false); // BẮT BUỘC: KHÓA MÃ CHUYẾN BAY LẠI, KHÔNG CHO SỬA KHÓA CHÍNH
+        txtMaChuyenBay.setEditable(false);
 
         txtMaMayBay.setText(model.getValueAt(selectedRow, 1) != null ? model.getValueAt(selectedRow, 1).toString() : "");
         txtMaHangHangKhong.setText(model.getValueAt(selectedRow, 2) != null ? model.getValueAt(selectedRow, 2).toString() : "");
@@ -764,7 +757,7 @@ public class GUI extends javax.swing.JFrame {
         txtSoVeConLai.setText(model.getValueAt(selectedRow, 10) != null ? model.getValueAt(selectedRow, 10).toString() : "0");
         txtTienVeThuVe.setText(model.getValueAt(selectedRow, 11) != null ? model.getValueAt(selectedRow, 11).toString() : "0");
 
-        // 4. Gắn Label và TextField vào Form
+        // 4. Gắn Label và TextField
         frame.add(new JLabel("Mã Chuyến Bay (Khóa):")); frame.add(txtMaChuyenBay);
         frame.add(new JLabel("Mã Máy Bay:")); frame.add(txtMaMayBay);
         frame.add(new JLabel("Mã Hãng Hàng Không:")); frame.add(txtMaHangHangKhong);
@@ -788,7 +781,7 @@ public class GUI extends javax.swing.JFrame {
         frame.add(new JLabel());
         frame.add(buttonPanel);
         
-        // 5. Sự kiện khi bấm nút Cập Nhật
+        // 5. bấm nút Cập Nhật
         btnSave.addActionListener(e -> {
             try {
                 // Kết nối Database và dùng lệnh UPDATE
@@ -804,21 +797,21 @@ public class GUI extends javax.swing.JFrame {
                 ps.setString(6, txtGioBay.getText().trim());
                 ps.setString(7, txtGioDen.getText().trim());
                 
-                // Ép kiểu các ô số
+                // Ép kiểu
                 ps.setInt(8, Integer.parseInt(txtTongSoVe.getText().trim().isEmpty() ? "0" : txtTongSoVe.getText().trim()));
                 ps.setInt(9, Integer.parseInt(txtSoVeDaBan.getText().trim().isEmpty() ? "0" : txtSoVeDaBan.getText().trim()));
                 ps.setInt(10, Integer.parseInt(txtSoVeConLai.getText().trim().isEmpty() ? "0" : txtSoVeConLai.getText().trim()));
                 ps.setLong(11, Long.parseLong(txtTienVeThuVe.getText().trim().isEmpty() ? "0" : txtTienVeThuVe.getText().trim()));
                 
-                // Điều kiện WHERE maChuyenBay = ?
+                // Điều kiện
                 ps.setString(12, txtMaChuyenBay.getText().trim());
 
                 int rowsUpdated = ps.executeUpdate();
 
                 if (rowsUpdated > 0) {
                     JOptionPane.showMessageDialog(frame, "Cập nhật chuyến bay thành công!");
-                    frame.dispose(); // Đóng form
-                    btnDoc_cbActionPerformed(evt); // Tự động gọi lại nút Đọc để làm mới bảng
+                    frame.dispose();
+                    btnDoc_cbActionPerformed(evt);
                 } else {
                     JOptionPane.showMessageDialog(frame, "Cập nhật thất bại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
                 }
@@ -845,15 +838,15 @@ public class GUI extends javax.swing.JFrame {
             return;
         }
 
-        // Lấy mã chuyến bay từ cột 0 của dòng được chọn
+        // Lấy mã chuyến bay
         String maCB = tbl_cb.getValueAt(selectedRow, 0).toString();
 
         int confirm = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn xóa chuyến bay " + maCB + "?", "Xác nhận", JOptionPane.YES_NO_OPTION);
         if (confirm == JOptionPane.YES_OPTION) {
             DAO.ChuyenBayDAO dao = new DAO.ChuyenBayDAO();
-            if (dao.xoa(maCB)) { // Nhớ đổi tên hàm xoa() thành delete() nếu DAO của bạn dùng tiếng Anh
+            if (dao.xoa(maCB)) {
                 JOptionPane.showMessageDialog(this, "Xóa thành công!");
-                btnDoc_cbActionPerformed(evt); // Gọi hàm cập nhật lại bảng
+                btnDoc_cbActionPerformed(evt);
             } else {
                 JOptionPane.showMessageDialog(this, "Xóa thất bại!");
             }
@@ -861,12 +854,12 @@ public class GUI extends javax.swing.JFrame {
     }                               
 
     private void btnThem_cbActionPerformed(java.awt.event.ActionEvent evt) {                                           
-    // Tạo form với tiêu đề mới
+    // Tạo form mới
     JFrame frame = new JFrame("Thêm Chuyến Bay mới");
-    frame.setLayout(new GridLayout(0, 2, 10, 10)); // 2 cột, khoảng cách 10px
-    frame.setSize(450, 650); // Tăng chiều cao lên 650 để đủ chỗ cho 12 dòng
+    frame.setLayout(new GridLayout(0, 2, 10, 10));
+    frame.setSize(450, 650);
     
-    // Khởi tạo các ô nhập liệu (12 ô tương ứng với 12 thuộc tính)
+    // Khởi tạo các ô nhập liệu
     JTextField txtMaChuyenBay = new JTextField();
     JTextField txtMaMayBay = new JTextField();
     JTextField txtMaHangHangKhong = new JTextField();
@@ -880,7 +873,7 @@ public class GUI extends javax.swing.JFrame {
     JTextField txtSoVeConLai = new JTextField();
     JTextField txtTienVeThuVe = new JTextField();
     
-    // Thêm Label và TextField vào Form theo từng cặp
+    // Thêm Label và TextField
     frame.add(new JLabel("Mã Chuyến Bay:"));
     frame.add(txtMaChuyenBay);
     
@@ -917,7 +910,7 @@ public class GUI extends javax.swing.JFrame {
     frame.add(new JLabel("Tiền Vé Thu Về:"));
     frame.add(txtTienVeThuVe);
     
-    // Khởi tạo các nút bấm
+    // Khởi tạo các nút
     JButton btnSave = new JButton("💾 Lưu");
     JButton btnCancel = new JButton("❌ Hủy");
     
@@ -925,20 +918,20 @@ public class GUI extends javax.swing.JFrame {
     buttonPanel.add(btnSave);
     buttonPanel.add(btnCancel);
     
-    frame.add(new JLabel()); // Ô trống để đẩy nút bấm sang cột bên phải
+    frame.add(new JLabel());
     frame.add(buttonPanel);
     
     // Xử lý sự kiện lưu
     btnSave.addActionListener(e -> {
         try {
-            // 1. Kiểm tra rỗng các trường bắt buộc (Mã CB, Ngày Bay)
+            // 1. Kiểm tra rỗng 
             if (txtMaChuyenBay.getText().trim().isEmpty() || txtNgayBay.getText().trim().isEmpty()) {
                 JOptionPane.showMessageDialog(frame, "Vui lòng nhập ít nhất Mã chuyến bay và Ngày bay!", "Thiếu thông tin", JOptionPane.WARNING_MESSAGE);
                 return;
             }
 
-            // 2. Khởi tạo đối tượng ChuyenBay và set 12 thuộc tính
-            model.ChuyenBay cb = new model.ChuyenBay();
+            // 2. Khởi tạo đối tượng ChuyenBay
+            DAL.ChuyenBay cb = new DAL.ChuyenBay();
             
             // Gán dữ liệu dạng Chuỗi (String)
             cb.setMaChuyenBay(txtMaChuyenBay.getText().trim());
@@ -950,8 +943,7 @@ public class GUI extends javax.swing.JFrame {
             cb.setGioBay(txtGioBay.getText().trim());
             cb.setGioDen(txtGioDen.getText().trim());
             
-            // 3. Gán dữ liệu dạng Số (Cần ép kiểu từ String sang Int / Long)
-            // Dùng '0' làm giá trị mặc định nếu người dùng để trống ô số
+            // 3. Gán dữ liệu dạng số
             String strTongVe = txtTongSoVe.getText().trim().isEmpty() ? "0" : txtTongSoVe.getText().trim();
             String strDaBan = txtSoVeDaBan.getText().trim().isEmpty() ? "0" : txtSoVeDaBan.getText().trim();
             String strConLai = txtSoVeConLai.getText().trim().isEmpty() ? "0" : txtSoVeConLai.getText().trim();
@@ -960,23 +952,20 @@ public class GUI extends javax.swing.JFrame {
             cb.setTongSoVe(Integer.parseInt(strTongVe));
             cb.setSoVeDaBan(Integer.parseInt(strDaBan));
             cb.setSoVeConLai(Integer.parseInt(strConLai));
-            cb.setTienVeThuVe(Long.parseLong(strTien)); // Dùng Long cho tiền tệ
+            cb.setTienVeThuVe(Long.parseLong(strTien));
 
-            // 4. Gọi DAO để lưu vào CSDL MySQL
+            // 4. Gọi DAO
             DAO.ChuyenBayDAO dao = new DAO.ChuyenBayDAO();
-            boolean isSuccess = dao.them(cb); // Lưu ý: Đổi thành dao.insert(cb) nếu DAO của bạn dùng tên tiếng Anh
-
-            // 5. Thông báo kết quả
+            boolean isSuccess = dao.them(cb);
             if (isSuccess) {
                 JOptionPane.showMessageDialog(frame, "Thêm chuyến bay thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-                frame.dispose(); // Đóng cửa sổ nhập liệu
-                btnDoc_cbActionPerformed(evt); // Tự động load lại bảng ở form chính để thấy data mới
+                frame.dispose();
+                btnDoc_cbActionPerformed(evt); 
             } else {
                 JOptionPane.showMessageDialog(frame, "Thêm thất bại! Mã chuyến bay có thể đã tồn tại hoặc sai Khóa ngoại.", "Lỗi", JOptionPane.ERROR_MESSAGE);
             }
 
         } catch (NumberFormatException ex) {
-            // Bắt lỗi nếu người dùng nhập chữ vào ô chỉ cho phép nhập số
             JOptionPane.showMessageDialog(frame, "Lỗi nhập liệu: Tổng vé, Số vé, Tiền vé phải là số nguyên!", "Lỗi định dạng", JOptionPane.ERROR_MESSAGE);
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(frame, "Lỗi hệ thống: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
@@ -998,18 +987,17 @@ public class GUI extends javax.swing.JFrame {
         model.setRowCount(0); 
         
         DAO.KhachHangDAO dao = new DAO.KhachHangDAO();
-        java.util.ArrayList<model.KhachHang> list = dao.docTatCa();
+        java.util.ArrayList<DAL.KhachHang> list = dao.docTatCa();
         
-        for (model.KhachHang kh : list) {
+        for (DAL.KhachHang kh : list) {
             model.addRow(new Object[]{
                 kh.getMaKhachHang(), kh.getHo(), kh.getTen(), 
-                null, // Cột Mã HHK trong bảng Khách Hàng của bạn đang bị dư, để null tạm
+                null,
                 kh.getNgaySinh(), kh.getSoDienThoai(), kh.getEmail()
             });
         }
     }
     private void btnThem_khActionPerformed(java.awt.event.ActionEvent evt) {                                           
-        // TODO add your handling code here:
         JFrame frame = new JFrame("Thêm Khách Hàng mới");
         frame.setLayout(new GridLayout(0, 2, 10, 10));
         frame.setSize(400, 500);
@@ -1056,36 +1044,59 @@ public class GUI extends javax.swing.JFrame {
     
     }                                          
 
-    private void btnSua_khActionPerformed(java.awt.event.ActionEvent evt) {                                          
-        // TODO add your handling code here:
-        JFrame frame = new JFrame("Sửa Thông Tin Khách Hàng ");
-        frame.setLayout(new GridLayout(0, 2, 10, 10));
+private void btnSua_khActionPerformed(java.awt.event.ActionEvent evt) {                                          
+        // 1. Kiểm tra xem người dùng đã chọn dòng nào trên bảng chưa
+        int selectedRow = tbl_kh.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn một khách hàng trên bảng để sửa!", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        // Lấy Mã Khách Hàng từ cột 0 của bảng
+        String maKH = tbl_kh.getValueAt(selectedRow, 0).toString();
+
+        // 2. Khởi tạo Form Sửa
+        JFrame frame = new JFrame("Sửa Thông Tin Khách Hàng");
+        frame.setLayout(new java.awt.GridLayout(0, 2, 10, 10));
         frame.setSize(400, 400);
         
-        JTextField txtMaKhachHang = new JTextField();
+        JTextField txtMaKhachHang = new JTextField(maKH);
+        txtMaKhachHang.setEditable(false); // BẮT BUỘC: Khóa mã lại không cho sửa
         JTextField txtHo = new JTextField();
         JTextField txtTen = new JTextField();
-        JTextField txtMaHHK = new JTextField();
         JTextField txtNgaySinh = new JTextField();
         JTextField txtSDT = new JTextField();
         JTextField txtEmail = new JTextField();
+
+        // 3. Lấy dữ liệu CHUẨN từ Database đắp lên Form (Chống lỗi lệch cột trên giao diện)
+        try {
+            Connection conn = DBConnection.getConnection();
+            String sqlSelect = "SELECT * FROM khachhang WHERE maKhachHang = ?";
+            PreparedStatement psSelect = conn.prepareStatement(sqlSelect);
+            psSelect.setString(1, maKH);
+            ResultSet rs = psSelect.executeQuery();
+            
+            if(rs.next()) {
+                txtHo.setText(rs.getString("ho"));
+                txtTen.setText(rs.getString("ten"));
+                txtNgaySinh.setText(rs.getString("ngaySinh"));
+                txtSDT.setText(rs.getString("soDienThoai"));
+                txtEmail.setText(rs.getString("email"));
+            }
+            conn.close();
+        } catch (Exception ex) {
+            System.out.println("Lỗi load dữ liệu khách hàng: " + ex.getMessage());
+        }
+
+        // 4. Gắn các ô nhập liệu vào Form (Bỏ qua cột Mã HHK vì CSDL không có)
+        frame.add(new JLabel("Mã Khách Hàng (Khóa):")); frame.add(txtMaKhachHang);
+        frame.add(new JLabel("Họ:")); frame.add(txtHo);
+        frame.add(new JLabel("Tên:")); frame.add(txtTen);
+        frame.add(new JLabel("Ngày Sinh (YYYY-MM-DD):")); frame.add(txtNgaySinh);
+        frame.add(new JLabel("Số Điện Thoại:")); frame.add(txtSDT);
+        frame.add(new JLabel("Email:")); frame.add(txtEmail);
         
-        frame.add(new JLabel("Mã Khách Hàng:"));
-        frame.add(txtMaKhachHang);
-        frame.add(new JLabel("Họ:"));
-        frame.add(txtHo);
-        frame.add(new JLabel("Tên:"));
-        frame.add(txtTen);
-        frame.add(new JLabel("Mã Hãng Hàng Không:"));
-        frame.add(txtMaHHK);
-        frame.add(new JLabel("Ngày Sinh:"));
-        frame.add(txtNgaySinh);
-        frame.add(new JLabel("Số Điện Thoại:"));
-        frame.add(txtSDT);
-        frame.add(new JLabel("Email:"));
-        frame.add(txtEmail);
-        
-        JButton btnSave = new JButton("💾 Lưu");
+        JButton btnSave = new JButton("💾 Cập Nhật");
         JButton btnCancel = new JButton("❌ Hủy");
         
         JPanel buttonPanel = new JPanel();
@@ -1095,14 +1106,44 @@ public class GUI extends javax.swing.JFrame {
         frame.add(new JLabel());
         frame.add(buttonPanel);
         
-        btnSave.addActionListener(e -> {});
+        // 5. Sự kiện khi bấm nút Cập Nhật
+        btnSave.addActionListener(e -> {
+            try {
+                // Kết nối Database và dùng lệnh UPDATE
+                Connection conn = DBConnection.getConnection();
+                String sqlUpdate = "UPDATE khachhang SET ho=?, ten=?, ngaySinh=?, soDienThoai=?, email=? WHERE maKhachHang=?";
+                PreparedStatement ps = conn.prepareStatement(sqlUpdate);
+
+                ps.setString(1, txtHo.getText().trim());
+                ps.setString(2, txtTen.getText().trim());
+                ps.setString(3, txtNgaySinh.getText().trim());
+                ps.setString(4, txtSDT.getText().trim());
+                ps.setString(5, txtEmail.getText().trim());
+                
+                // Điều kiện
+                ps.setString(6, txtMaKhachHang.getText().trim());
+
+                int rowsUpdated = ps.executeUpdate();
+
+                if (rowsUpdated > 0) {
+                    JOptionPane.showMessageDialog(frame, "Cập nhật khách hàng thành công!");
+                    frame.dispose();
+                    loadKhachHang();
+                } else {
+                    JOptionPane.showMessageDialog(frame, "Cập nhật thất bại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                }
+                conn.close();
+
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(frame, "Lỗi hệ thống: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+            }
+        });
         
         btnCancel.addActionListener(e -> frame.dispose());
         
         frame.setLocationRelativeTo(this);
         frame.setVisible(true);
-    
-    }                                         
+    }          
 
     private void btnXoa_khActionPerformed(java.awt.event.ActionEvent evt) {
         int selectedRow = tbl_kh.getSelectedRow();
@@ -1111,7 +1152,7 @@ public class GUI extends javax.swing.JFrame {
             return;
         }
 
-        // Lấy mã khách hàng từ cột 0 của dòng được chọn
+        // Lấy mã khách hàng từ cột 0
         String maKH = tbl_kh.getValueAt(selectedRow, 0).toString();
 
         int confirm = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn xóa khách hàng " + maKH + "?", "Xác nhận", JOptionPane.YES_NO_OPTION);
@@ -1119,7 +1160,7 @@ public class GUI extends javax.swing.JFrame {
             DAO.KhachHangDAO dao = new DAO.KhachHangDAO();
             if (dao.xoa(maKH)) {
                 JOptionPane.showMessageDialog(this, "Xóa thành công!");
-                btnDoc_khActionPerformed(evt); // Gọi hàm cập nhật lại bảng
+                btnDoc_khActionPerformed(evt);
             } else {
                 JOptionPane.showMessageDialog(this, "Xóa thất bại!");
             }
@@ -1163,15 +1204,15 @@ public class GUI extends javax.swing.JFrame {
     
     //========================= SỰ KIỆN CHO QUẢN LÝ VÉ ========================
     private void btnDoc_veActionPerformed(java.awt.event.ActionEvent evt) {                                          
-        // Lấy model của bảng Vé
+        // Lấy model
         javax.swing.table.DefaultTableModel model = (javax.swing.table.DefaultTableModel) tbl_ve.getModel();
-        model.setRowCount(0); // Xóa sạch dữ liệu cũ
+        model.setRowCount(0);
         
         try {
             DAO.VeDAO dao = new DAO.VeDAO();
-            java.util.ArrayList<model.Ve> list = dao.docTatCa(); // Nhớ đổi thành selectAll() nếu dùng tiếng Anh
+            java.util.ArrayList<DAL.Ve> list = dao.docTatCa();
             
-            for (model.Ve ve : list) {
+            for (DAL.Ve ve : list) {
                 model.addRow(new Object[]{
                     ve.getMaVe(), 
                     ve.getMaChuyenBay(), 
@@ -1186,7 +1227,6 @@ public class GUI extends javax.swing.JFrame {
     }
     
     private void btnThem_veActionPerformed(java.awt.event.ActionEvent evt) {                                           
-        // TODO add your handling code here:
         JFrame frame = new JFrame("Thêm Vé");
         frame.setLayout(new GridLayout(0, 2, 10, 10));
         frame.setSize(400, 300);
@@ -1227,7 +1267,7 @@ public class GUI extends javax.swing.JFrame {
     }                                          
 
     private void btnSua_veActionPerformed(java.awt.event.ActionEvent evt) {                                          
-    // 1. Kiểm tra xem người dùng đã chọn vé nào trên bảng chưa
+    // 1. Kiểm tra chọn
     int selectedRow = tbl_ve.getSelectedRow();
     if (selectedRow == -1) {
         JOptionPane.showMessageDialog(this, "Vui lòng chọn một vé trên bảng để sửa!", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
@@ -1245,9 +1285,8 @@ public class GUI extends javax.swing.JFrame {
     JTextField txtLoaiVe = new JTextField();
     JTextField txtGiaVe = new JTextField();
 
-    // 3. Đổ dữ liệu từ bảng lên Form
     txtMaVe.setText(tbl_ve.getValueAt(selectedRow, 0).toString());
-    txtMaVe.setEditable(false); // KHÓA MÃ VÉ LẠI, KHÔNG CHO SỬA (Rất quan trọng)
+    txtMaVe.setEditable(false);
     txtMaChuyenBay.setText(tbl_ve.getValueAt(selectedRow, 1) != null ? tbl_ve.getValueAt(selectedRow, 1).toString() : "");
     txtMaGhe.setText(tbl_ve.getValueAt(selectedRow, 2) != null ? tbl_ve.getValueAt(selectedRow, 2).toString() : "");
     txtLoaiVe.setText(tbl_ve.getValueAt(selectedRow, 3) != null ? tbl_ve.getValueAt(selectedRow, 3).toString() : "");
@@ -1269,24 +1308,24 @@ public class GUI extends javax.swing.JFrame {
     frame.add(new JLabel());
     frame.add(buttonPanel);
     
-    // 4. Sự kiện khi bấm nút Cập Nhật
+    //nút Cập Nhật
     btnSave.addActionListener(e -> {
             try {
-                model.Ve ve = new model.Ve();
+                DAL.Ve ve = new DAL.Ve();
                 ve.setMaVe(txtMaVe.getText().trim());
                 ve.setMaChuyenBay(txtMaChuyenBay.getText().trim());
                 ve.setMaGhe(txtMaGhe.getText().trim());
                 ve.setLoaiVe(txtLoaiVe.getText().trim());
                 
-                // Ép kiểu Giá Vé sang double
+                // Ép kiểu 
                 String strGia = txtGiaVe.getText().trim().isEmpty() ? "0" : txtGiaVe.getText().trim();
                 ve.setGiaVe(Double.parseDouble(strGia));
                 
                 DAO.VeDAO dao = new DAO.VeDAO();
-                if (dao.sua(ve)) { // Đổi thành dao.update(ve) nếu cần
+                if (dao.sua(ve)) {
                     JOptionPane.showMessageDialog(frame, "Cập nhật vé thành công!");
                     frame.dispose();
-                    btnDoc_veActionPerformed(evt); // Load lại bảng
+                    btnDoc_veActionPerformed(evt);
                 } else {
                     JOptionPane.showMessageDialog(frame, "Cập nhật thất bại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
                 }
@@ -1310,16 +1349,15 @@ public class GUI extends javax.swing.JFrame {
             return;
         }
 
-        // Lấy Mã Vé từ cột 0
         String maVe = tbl_ve.getValueAt(selectedRow, 0).toString();
 
         int confirm = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn hủy vé " + maVe + " không?", "Xác nhận Hủy Vé", JOptionPane.YES_NO_OPTION);
         if (confirm == JOptionPane.YES_OPTION) {
             try {
                 DAO.VeDAO dao = new DAO.VeDAO();
-                if (dao.xoa(maVe)) { // Đổi thành delete() nếu cần
+                if (dao.xoa(maVe)) {
                     JOptionPane.showMessageDialog(this, "Đã hủy vé thành công!");
-                    btnDoc_veActionPerformed(evt); // Tự động load lại bảng
+                    btnDoc_veActionPerformed(evt);
                 } else {
                     JOptionPane.showMessageDialog(this, "Hủy vé thất bại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
                 }
@@ -1371,9 +1409,9 @@ public class GUI extends javax.swing.JFrame {
         
         try {
             DAO.CTKMDAO dao = new DAO.CTKMDAO();
-            java.util.ArrayList<model.CTKM> list = dao.docTatCa(); 
+            java.util.ArrayList<DAL.CTKM> list = dao.docTatCa(); 
             
-            for (model.CTKM km : list) {
+            for (DAL.CTKM km : list) {
                 model.addRow(new Object[]{
                     km.getMaCTKM(),
                     km.getTenCTKM(),
@@ -1390,7 +1428,7 @@ public class GUI extends javax.swing.JFrame {
     private void btnThem_ctkmActionPerformed(java.awt.event.ActionEvent evt) {                                             
         JFrame frame = new JFrame("Thêm Chương Trình Khuyến Mãi");
         frame.setLayout(new java.awt.GridLayout(0, 2, 10, 10));
-        frame.setSize(400, 300); // 5 thuộc tính nên thu nhỏ khung lại cho gọn
+        frame.setSize(400, 300);
         
         JTextField txtMaCTKM = new JTextField();
         JTextField txtTenCTKM = new JTextField();
@@ -1416,7 +1454,7 @@ public class GUI extends javax.swing.JFrame {
         
         btnSave.addActionListener(e -> {
             try {
-                model.CTKM km = new model.CTKM();
+                DAL.CTKM km = new DAL.CTKM();
                 km.setMaCTKM(txtMaCTKM.getText().trim());
                 km.setTenCTKM(txtTenCTKM.getText().trim());
                 km.setNgayBD(txtNgayBD.getText().trim());
@@ -1427,7 +1465,7 @@ public class GUI extends javax.swing.JFrame {
                 if (dao.them(km)) { 
                     JOptionPane.showMessageDialog(frame, "Thêm CTKM thành công!");
                     frame.dispose();
-                    btnDoc_ctkmActionPerformed(evt); // Load lại bảng
+                    btnDoc_ctkmActionPerformed(evt);
                 } else {
                     JOptionPane.showMessageDialog(frame, "Thêm thất bại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
                 }
@@ -1458,9 +1496,9 @@ public class GUI extends javax.swing.JFrame {
     JTextField txtNgayKT = new JTextField();
     JTextField txtNoiDung = new JTextField();
 
-    // Lấy dữ liệu từ bảng (chỉ có 5 cột: 0, 1, 2, 3, 4)
+    // Lấy dữ liệu từ bảng
     txtMaCTKM.setText(jTable4.getValueAt(selectedRow, 0).toString());
-    txtMaCTKM.setEditable(false); // KHÓA MÃ LẠI
+    txtMaCTKM.setEditable(false);
     txtTenCTKM.setText(jTable4.getValueAt(selectedRow, 1) != null ? jTable4.getValueAt(selectedRow, 1).toString() : "");
     txtNgayBD.setText(jTable4.getValueAt(selectedRow, 2) != null ? jTable4.getValueAt(selectedRow, 2).toString() : "");
     txtNgayKT.setText(jTable4.getValueAt(selectedRow, 3) != null ? jTable4.getValueAt(selectedRow, 3).toString() : "");
@@ -1481,7 +1519,7 @@ public class GUI extends javax.swing.JFrame {
     
     btnSave.addActionListener(e -> {
         try {
-            model.CTKM km = new model.CTKM();
+            DAL.CTKM km = new DAL.CTKM();
             km.setMaCTKM(txtMaCTKM.getText().trim());
             km.setTenCTKM(txtTenCTKM.getText().trim());
             km.setNgayBD(txtNgayBD.getText().trim());
@@ -1507,17 +1545,17 @@ public class GUI extends javax.swing.JFrame {
 }
 
     private void btnXoa_ctkmActionPerformed(java.awt.event.ActionEvent evt) {                                            
-        // 1. Kiểm tra xem người dùng đã chọn dòng nào trên bảng jTable4 chưa
+        // 1. Kiểm tra xem người dùng đã chọn dòng nào
         int selectedRow = jTable4.getSelectedRow();
         if (selectedRow == -1) {
             JOptionPane.showMessageDialog(this, "Vui lòng chọn một chương trình khuyến mãi trên bảng để xóa!", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
-        // 2. Lấy Mã CTKM từ cột 0 của dòng được chọn
+        // 2. Lấy Mã CTKM từ cột
         String maCTKM = jTable4.getValueAt(selectedRow, 0).toString();
 
-        // 3. Hiển thị hộp thoại xác nhận an toàn
+        // 3. Hiển thị hộp thoại xác nhận
         int confirm = JOptionPane.showConfirmDialog(this, 
                 "Bạn có chắc chắn muốn xóa chương trình khuyến mãi: " + maCTKM + "?", 
                 "Xác nhận Xóa", 
@@ -1525,14 +1563,10 @@ public class GUI extends javax.swing.JFrame {
                 
         if (confirm == JOptionPane.YES_OPTION) {
             try {
-                // 4. Gọi DAO để thực thi lệnh xóa xuống MySQL
                 DAO.CTKMDAO dao = new DAO.CTKMDAO();
                 
-                // Lưu ý: Đổi tên hàm dao.xoa thành dao.delete nếu DAO của bạn dùng tiếng Anh
                 if (dao.xoa(maCTKM)) { 
                     JOptionPane.showMessageDialog(this, "Xóa thành công!");
-                    
-                    // 5. Tự động làm mới bảng sau khi xóa
                     btnDoc_ctkmActionPerformed(evt); 
                 } else {
                     JOptionPane.showMessageDialog(this, "Xóa thất bại! Có thể mã CTKM này đang được dùng trong Hóa Đơn hoặc Chuyến Bay.", "Lỗi Ràng Buộc", JOptionPane.ERROR_MESSAGE);
@@ -1576,19 +1610,16 @@ public class GUI extends javax.swing.JFrame {
             }
         }
     }                  
-    
    
     //========================= SỰ KIỆN CHO BÁO CÁO ========================
     private void btnThongKeActionPerformed(java.awt.event.ActionEvent evt) {                                           
         try {
-            // Lấy trực tiếp dữ liệu từ bảng Chuyến Bay đang hiển thị trên màn hình (Bỏ qua DAO)
             javax.swing.table.DefaultTableModel model = (javax.swing.table.DefaultTableModel) tbl_cb.getModel();
             int tongChuyenBay = model.getRowCount();
             int tongVeDaBan = 0;
             long tongDoanhThu = 0;
 
             for (int i = 0; i < tongChuyenBay; i++) {
-                // Cột index 9 là "Đã Bán", Cột index 11 là "Tiền Vé"
                 Object objBan = model.getValueAt(i, 9);
                 Object objTien = model.getValueAt(i, 11);
                 
@@ -1642,7 +1673,6 @@ public class GUI extends javax.swing.JFrame {
         String maVe = JOptionPane.showInputDialog(this, "Nhập Mã Vé để xem hóa đơn (Ví dụ: VTH01):");
         if (maVe != null && !maVe.trim().isEmpty()) {
             try {
-                // Kết nối thẳng Database để lấy dữ liệu chuẩn 100%
                 Connection conn = DBConnection.getConnection();
                 
                 String sqlVe = "SELECT * FROM ve WHERE maVe = ?";
@@ -1781,7 +1811,7 @@ public class GUI extends javax.swing.JFrame {
                     
                     String[] data = line.split(",");
                     if (data.length >= 12) {
-                        model.ChuyenBay cb = new model.ChuyenBay();
+                        DAL.ChuyenBay cb = new DAL.ChuyenBay();
                         cb.setMaChuyenBay(data[0].trim());
                         cb.setMaMayBay(data[1].trim());
                         cb.setMaHangHangKhong(data[2].trim());
@@ -1802,7 +1832,7 @@ public class GUI extends javax.swing.JFrame {
                     }
                 }
                 JOptionPane.showMessageDialog(this, "Đã nhập thành công " + count + " chuyến bay vào Database!");
-                btnDoc_cbActionPerformed(evt); // Gọi hàm để load lại bảng
+                btnDoc_cbActionPerformed(evt);
                 
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, "Lỗi đọc file Excel: " + e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);

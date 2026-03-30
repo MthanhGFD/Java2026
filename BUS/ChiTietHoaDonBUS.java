@@ -1,8 +1,8 @@
 package BUS;
 
 import DAO.ChiTietHoaDonDAO;
-import model.ChiTietHoaDon;
 import java.util.ArrayList;
+import DAL.ChiTietHoaDon;
 
 public class ChiTietHoaDonBUS {
     private ArrayList<ChiTietHoaDon> listCTHD;

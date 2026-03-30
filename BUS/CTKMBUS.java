@@ -1,8 +1,8 @@
 package BUS;
 
 import DAO.CTKMDAO;
-import model.CTKM;
 import java.util.ArrayList;
+import DAL.CTKM;
 
 public class CTKMBUS {
     private ArrayList<CTKM> listCTKM;

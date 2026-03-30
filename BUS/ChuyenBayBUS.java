@@ -1,8 +1,8 @@
 package BUS;
 
-import model.ChuyenBay;
 import DAO.ChuyenBayDAO;
 import java.util.ArrayList;
+import DAL.ChuyenBay;
 
 public class ChuyenBayBUS {
     private ArrayList<ChuyenBay> listCB;

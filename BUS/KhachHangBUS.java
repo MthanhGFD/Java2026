@@ -1,8 +1,10 @@
 package BUS;
 
 import DAO.KhachHangDAO;
-import model.KhachHang;
+
 import java.util.ArrayList;
+
+import DAL.KhachHang;
 
 public class KhachHangBUS {
     private ArrayList<KhachHang> listKH;

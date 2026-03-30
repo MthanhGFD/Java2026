@@ -1,8 +1,10 @@
 package BUS;
 
 import DAO.VeDAO;
-import model.Ve;
+
 import java.util.ArrayList;
+
+import DAL.Ve;
 
 public class VeBUS {
     private ArrayList<Ve> listVe;

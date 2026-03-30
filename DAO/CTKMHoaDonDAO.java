@@ -1,11 +1,12 @@
 package DAO;
 
-import model.CTKMHoaDon; 
 import database.DBConnection;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+
+import DAL.CTKMHoaDon;
 
 public class CTKMHoaDonDAO {
 
@@ -44,7 +45,7 @@ public class CTKMHoaDonDAO {
         return false;
     }
 
-    // 3. XÓA (Dựa vào 2 khóa chính)
+    // 3. XÓA
     public boolean xoa(String maCTKM, String maHD) {
         String sql = "DELETE FROM CTKM_HOADON WHERE maCTKM = ? AND maHD = ?";
         try (Connection con = DBConnection.getConnection();
@@ -58,7 +59,7 @@ public class CTKMHoaDonDAO {
         return false;
     }
 
-    // 4. SỬA (Cập nhật giá trị khuyến mãi cho hóa đơn đó)
+    // 4. SỬA
     public boolean sua(CTKMHoaDon ct) {
         String sql = "UPDATE CTKM_HOADON SET giaTriKM = ? WHERE maCTKM = ? AND maHD = ?";
         try (Connection con = DBConnection.getConnection();
