@@ -65,9 +65,19 @@ public class ChuyenBay{
 
     public int getSoVeConLai() { return this.TongSoVe - this.SoVeDaBan; }
 
-    public long getTienVeThuVe(long giaVe){ 
-        this.TienVeThuVe = giaVe * this.SoVeDaBan;
-        return this.TienVeThuVe;
+    // Lấy tiền vé thu về (Đã sửa lại đúng chữ T viết hoa)
+    public long getTienVeThuVe() {
+        return this.TienVeThuVe; 
+    }
+
+    // Cài đặt tiền vé thu về (Đã sửa lại đúng chữ T viết hoa)
+    public void setTienVeThuVe(long TienVeThuVe) {
+        this.TienVeThuVe = TienVeThuVe;
+    }
+
+    // Bổ sung hàm setSoVeConLai (GUI.java đang cần gọi hàm này khi Lưu)
+    public void setSoVeConLai(int SoVeConLai) {
+        this.SoVeConLai = SoVeConLai;
     }
 
     @Override
@@ -83,6 +93,9 @@ public class ChuyenBay{
                 ", GioDen='" + GioDen + '\'' +
                 ", TongSoVe=" + TongSoVe +
                 ", SoVeDaBan=" + SoVeDaBan +
+                ", SoVeConLai=" + SoVeConLai +
+                ", TienVeThuVe=" + TienVeThuVe +
                 '}';
     }
 }
+
