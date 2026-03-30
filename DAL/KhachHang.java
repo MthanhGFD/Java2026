@@ -1,4 +1,4 @@
-package model;
+package DAL;
 
 public class KhachHang {
      String maKhachHang;

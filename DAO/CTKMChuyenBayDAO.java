@@ -1,11 +1,12 @@
 package DAO;
 
-import model.CTKMChuyenBay; 
 import database.DBConnection;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+
+import DAL.CTKMChuyenBay;
 
 public class CTKMChuyenBayDAO {
 

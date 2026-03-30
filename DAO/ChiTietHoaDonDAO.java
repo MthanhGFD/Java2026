@@ -1,8 +1,9 @@
 package DAO;
 
-import model.ChiTietHoaDon;
 import java.sql.*;
 import java.util.ArrayList;
+
+import DAL.ChiTietHoaDon;
 import database.DBConnection;
 
 public class ChiTietHoaDonDAO {

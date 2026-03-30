@@ -1,11 +1,12 @@
 package DAO;
 
-import model.DiaDiem;
 import database.DBConnection;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+
+import DAL.DiaDiem;
 
 public class DiaDiemDAO {
 

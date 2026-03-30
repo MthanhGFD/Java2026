@@ -1,4 +1,4 @@
-package model;
+package DAL;
 
 public class CTKMChuyenBay {
     private String maCTKM;

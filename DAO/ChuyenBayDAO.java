@@ -1,13 +1,14 @@
 package DAO;
 
-import model.ChuyenBay;
 import java.sql.*;
 import java.util.ArrayList;
+
+import DAL.ChuyenBay;
 import database.DBConnection;
 
 public class ChuyenBayDAO {
 
-    // 1. LẤY TẤT CẢ DANH SÁCH (Đọc)
+    // 1. LẤY DANH SÁCH
     public ArrayList<ChuyenBay> docTatCa() {
         ArrayList<ChuyenBay> ds = new ArrayList<>();
         String sql = "SELECT * FROM ChuyenBay";
@@ -30,7 +31,7 @@ public class ChuyenBayDAO {
         return ds;
     }
 
-    // 2. THÊM CHUYẾN BAY (Đã sửa lại cho an toàn hơn bằng cách liệt kê rõ cột)
+    // 2. THÊM CHUYẾN BAY
     public boolean them(ChuyenBay cb) {
         String sql = "INSERT INTO ChuyenBay (maChuyenBay, maMayBay, maHangHangKhong, maSanBayDi, maSanBayDen, NgayBay, GioBay, GioDen, TongSoVe, SoVeDaBan) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (Connection conn = DBConnection.getConnection();
@@ -83,7 +84,6 @@ public class ChuyenBayDAO {
             pst.setString(7, cb.getGioDen());
             pst.setInt(8, cb.getTongSoVe());
             pst.setInt(9, cb.getSoVeDaBan());
-            // Mã chuyến bay là điều kiện WHERE nên nằm ở dấu ? cuối cùng (số 10)
             pst.setString(10, cb.getMaChuyenBay());
             
             return pst.executeUpdate() > 0;
@@ -93,7 +93,7 @@ public class ChuyenBayDAO {
         }
     }
 
-    // 5. TÌM KIẾM CHUYẾN BAY THEO MÁ (Trả về 1 đối tượng duy nhất)
+    // 5. TÌM KIẾM CHUYẾN BAY
     public ChuyenBay timMa(String maCB) {
         String sql = "SELECT * FROM ChuyenBay WHERE maChuyenBay = ?";
         try (Connection conn = DBConnection.getConnection();
@@ -118,7 +118,6 @@ public class ChuyenBayDAO {
     }
     public ArrayList<Object[]> thongKeHanhKhach() {
     ArrayList<Object[]> list = new ArrayList<>();
-    // SQL: Kết nối bảng Chuyến Bay với bảng Vé để đếm số vé đã bán (hành khách)
     String sql = "SELECT cb.maChuyenBay, cb.maSanBayDi, cb.maSanBayDen, cb.ngayBay, COUNT(ve.maVe) as soKhach " +
                  "FROM ChuyenBay cb LEFT JOIN Ve ve ON cb.maChuyenBay = ve.maChuyenBay " +
                  "GROUP BY cb.maChuyenBay";

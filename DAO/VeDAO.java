@@ -1,11 +1,12 @@
 package DAO;
 
-import model.Ve;
 import database.DBConnection;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+
+import DAL.Ve;
 
 public class VeDAO {
 
@@ -46,7 +47,7 @@ public class VeDAO {
             pst.setString(1, ve.getMaVe());
             pst.setString(2, ve.getMaChuyenBay());
             pst.setString(3, ve.getMaGhe());
-            pst.setDouble(4, ve.getGiaVe()); // Truyền kiểu double
+            pst.setDouble(4, ve.getGiaVe());
             pst.setString(5, ve.getLoaiVe());
             
             return pst.executeUpdate() > 0;

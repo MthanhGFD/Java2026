@@ -1,8 +1,10 @@
 package BUS;
 
 import DAO.HoaDonDAO;
-import model.HoaDon;
+
 import java.util.ArrayList;
+
+import DAL.HoaDon;
 
 public class HoaDonBUS {
     private ArrayList<HoaDon> listHD;

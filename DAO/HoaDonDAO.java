@@ -1,8 +1,9 @@
 package DAO;
 
-import model.HoaDon;
 import java.sql.*;
 import java.util.ArrayList;
+
+import DAL.HoaDon;
 import database.DBConnection;
 
 public class HoaDonDAO {
