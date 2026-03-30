@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class VeDAO {
 
     // 1. Đọc dữ liệu (Lấy danh sách tất cả Vé)
-    public ArrayList<Ve> selectAll() {
+    public ArrayList<Ve> docTatCa() {
         ArrayList<Ve> list = new ArrayList<>();
         String sql = "SELECT * FROM Ve"; // Sửa lại tên bảng nếu MySQL của bạn đặt khác (VD: ve_may_bay)
         
@@ -37,7 +37,7 @@ public class VeDAO {
     }
 
     // 2. Thêm Vé mới
-    public boolean insert(Ve ve) {
+    public boolean them(Ve ve) {
         String sql = "INSERT INTO Ve (MaVe, MaChuyenBay, MaGhe, GiaVe, LoaiVe) VALUES (?, ?, ?, ?, ?)";
         
         try (Connection con = DBConnection.getConnection();
@@ -58,7 +58,7 @@ public class VeDAO {
     }
 
     // 3. Cập nhật (Sửa) thông tin Vé
-    public boolean update(Ve ve) {
+    public boolean sua(Ve ve) {
         String sql = "UPDATE Ve SET MaChuyenBay = ?, MaGhe = ?, GiaVe = ?, LoaiVe = ? WHERE MaVe = ?";
         
         try (Connection con = DBConnection.getConnection();
@@ -79,7 +79,7 @@ public class VeDAO {
     }
 
     // 4. Xóa Vé
-    public boolean delete(String maVe) {
+    public boolean xoa(String maVe) {
         String sql = "DELETE FROM Ve WHERE MaVe = ?";
         
         try (Connection con = DBConnection.getConnection();
@@ -89,7 +89,7 @@ public class VeDAO {
             
             return pst.executeUpdate() > 0;
         } catch (Exception e) {
-            System.out.println("Lỗi xóa Vé: " + e.getMessage());
+            System.out.println("Lỗi xóa h: " + e.getMessage());
             e.printStackTrace();
         }
         return false;

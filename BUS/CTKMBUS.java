@@ -8,7 +8,7 @@ public class CTKMBUS {
     private ArrayList<CTKM> listCTKM;
     private CTKMDAO dao = new CTKMDAO();
 
-    public CTKMBUS() { listCTKM = dao.selectAll(); }
+    public CTKMBUS() { listCTKM = dao.docTatCa(); }
 
     public ArrayList<CTKM> getAll() { return listCTKM; }
 
@@ -26,7 +26,7 @@ public class CTKMBUS {
         if (getById(ct.getMaCTKM()) != null) {
             return "Mã khuyến mãi này đã tồn tại!";
         }
-        if (dao.insert(ct)) {
+        if (dao.them(ct)) {
             listCTKM.add(ct);
             return "Thêm khuyến mãi thành công!";
         }
@@ -34,7 +34,7 @@ public class CTKMBUS {
     }
 
     public boolean xoaCTKM(String ma) {
-        if (dao.delete(ma)) {
+        if (dao.xoa(ma)) {
             listCTKM.removeIf(ct -> ct.getMaCTKM().equalsIgnoreCase(ma));
             return true;
         }
@@ -42,7 +42,7 @@ public class CTKMBUS {
     }
 
     public String suaCTKM(CTKM ctMoi) {
-        if (dao.update(ctMoi)) {
+        if (dao.sua(ctMoi)) {
             for (int i = 0; i < listCTKM.size(); i++) {
                 if (listCTKM.get(i).getMaCTKM().equalsIgnoreCase(ctMoi.getMaCTKM())) {
                     listCTKM.set(i, ctMoi);

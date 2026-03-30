@@ -10,7 +10,7 @@ public class KhachHangBUS {
 
     public KhachHangBUS() {
         // Load dữ liệu từ DB lên mảng khi khởi tạo
-        listKH = khDAO.selectAll();
+        listKH = khDAO.docTatCa();
     }
 
     public ArrayList<KhachHang> getAll() {
@@ -25,7 +25,7 @@ public class KhachHangBUS {
             if (item.getMaKhachHang().equals(kh.getMaKhachHang())) return "Mã đã tồn tại";
         }
 
-        if (khDAO.insert(kh)) {
+        if (khDAO.them(kh)) {
             listKH.add(kh); // Cập nhật mảng tạm
             return "Thêm thành công";
         }
@@ -33,7 +33,7 @@ public class KhachHangBUS {
     }
 
     // Các hàm tìm kiếm
-    public KhachHang findById(String ma) {
+    public KhachHang timTheoMa(String ma) {
         for (KhachHang kh : listKH) {
             if (kh.getMaKhachHang().equals(ma)) return kh;
         }

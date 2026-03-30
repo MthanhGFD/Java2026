@@ -8,7 +8,7 @@ public class HangHangKhongBUS {
     private ArrayList<HangHangKhong> listHHK;
     private HangHangKhongDAO dao = new HangHangKhongDAO();
 
-    public HangHangKhongBUS() { listHHK = dao.selectAll(); }
+    public HangHangKhongBUS() { listHHK = dao.docTatCa(); }
 
     public ArrayList<HangHangKhong> getAll() { return listHHK; }
 

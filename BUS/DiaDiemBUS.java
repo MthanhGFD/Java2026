@@ -48,7 +48,7 @@ public class DiaDiemBUS {
 
         // Đã xóa logic kiểm tra Sân bay đi/đến vì không phù hợp với Địa Điểm
 
-        boolean isSuccess = ddDAO.insert(dd);
+        boolean isSuccess = ddDAO.them(dd);
         if (isSuccess) {
             listDiaDiem.add(dd);
             return "Thêm địa điểm thành công!";
@@ -59,7 +59,7 @@ public class DiaDiemBUS {
 
     // Xóa Địa Điểm
     public boolean xoaDiaDiem(String maDD) {
-        if (ddDAO.delete(maDD)) {
+        if (ddDAO.xoa(maDD)) {
             listDiaDiem.removeIf(dd -> dd.getMaDiaDiem().equalsIgnoreCase(maDD));
             return true;
         }
