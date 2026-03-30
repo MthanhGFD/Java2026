@@ -188,6 +188,15 @@ public class GUI extends javax.swing.JFrame {
             }
         });
 
+        // --- BỔ SUNG LẠI NÚT NẾU LỠ XÓA MẤT ---
+        javax.swing.JButton btnDoc_cb = new javax.swing.JButton("Cập Nhật");
+        btnDoc_cb.addActionListener(e -> btnDoc_cbActionPerformed(e));
+
+        // --- BẮT ĐẦU ĐOẠN CODE LAYOUT MỚI MÀ BẠN VỪA DÁN ---
+        jPanel4.setLayout(new java.awt.BorderLayout(0, 15)); 
+        
+        // ... (phần code FlowLayout bạn đã dán giữ nguyên)
+
         tbl_cb.setAutoCreateRowSorter(true);
         tbl_cb.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -210,38 +219,33 @@ public class GUI extends javax.swing.JFrame {
         }
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(17, 17, 17)
-                        .addComponent(btnThem_cb, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(30, 30, 30)
-                        .addComponent(btnXoa_cb, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(30, 30, 30)
-                        .addComponent(btnSua_cb, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(30, 30, 30)
-                        .addComponent(btnTim_cb, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 766, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(16, 16, 16)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnThem_cb)
-                    .addComponent(btnXoa_cb)
-                    .addComponent(btnTim_cb)
-                    .addComponent(btnSua_cb))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 413, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(27, Short.MAX_VALUE))
-        );
+        // --- BẮT ĐẦU ĐOẠN CODE MỚI THAY THẾ CHO GROUPLAYOUT CỦA NETBEANS ---
+        jPanel4.setLayout(new java.awt.BorderLayout(0, 15)); // Khung chính chia trên/dưới, cách nhau 15px
+
+        // 1. Tạo một Panel mới chứa toàn bộ các nút bấm nằm ngang
+        javax.swing.JPanel buttonPanelCB = new javax.swing.JPanel(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 20, 10));
+        
+        // 2. Thêm các nút cũ vào Panel
+        buttonPanelCB.add(btnThem_cb);
+        buttonPanelCB.add(btnXoa_cb);
+        buttonPanelCB.add(btnSua_cb);
+        buttonPanelCB.add(btnTim_cb);
+        buttonPanelCB.add(btnDoc_cb);
+
+        // 3. KHAI BÁO VÀ THÊM 2 NÚT EXCEL MỚI TINH VÀO ĐÂY
+        javax.swing.JButton btnXuatExcel_cb = new javax.swing.JButton("Xuất Excel");
+        javax.swing.JButton btnNhapExcel_cb = new javax.swing.JButton("Nhập Excel");
+        buttonPanelCB.add(btnXuatExcel_cb);
+        buttonPanelCB.add(btnNhapExcel_cb);
+
+        // 4. Gắn sự kiện (Click) cho 2 nút mới
+        btnXuatExcel_cb.addActionListener(e -> btnXuatExcel_cbActionPerformed(e));
+        btnNhapExcel_cb.addActionListener(e -> btnNhapExcel_cbActionPerformed(e));
+
+        // 5. Gắn Panel nút bấm lên TỰA ĐẦU (NORTH) và Bảng dữ liệu vào GIỮA (CENTER)
+        jPanel4.add(buttonPanelCB, java.awt.BorderLayout.NORTH);
+        jPanel4.add(jScrollPane1, java.awt.BorderLayout.CENTER);
+        // --- KẾT THÚC ĐOẠN CODE MỚI ---
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -716,37 +720,65 @@ public class GUI extends javax.swing.JFrame {
             }
         }
     }
-    private void btnSua_cbActionPerformed(java.awt.event.ActionEvent evt) {                                          
-        // TODO add your handling code here:
-        JFrame frame = new JFrame("Sửa Thông Tin Chuyến Bay ");
-        frame.setLayout(new GridLayout(0, 2, 10, 10));
-        frame.setSize(400, 500);
+    private void btnSua_cbActionPerformed(java.awt.event.ActionEvent evt) {                                                                                 
+        // 1. Kiểm tra xem người dùng đã chọn dòng nào trên bảng chưa
+        int selectedRow = tbl_cb.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn một chuyến bay trên bảng để sửa!", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        // 2. Tạo Form Sửa với đủ 12 trường thông tin
+        JFrame frame = new JFrame("Sửa Thông Tin Chuyến Bay");
+        frame.setLayout(new java.awt.GridLayout(0, 2, 10, 10));
+        frame.setSize(450, 650);
         
         JTextField txtMaChuyenBay = new JTextField();
-        JTextField txtHHK = new JTextField();
-        JTextField txtDiemDen = new JTextField();
-        JTextField txtDiemDi= new JTextField();
-        JTextField txtNgayBay= new JTextField();
-        JTextField txtTongVe = new JTextField();
-        JTextField txtDaBan = new JTextField();
-        JTextField txtConLai = new JTextField();
+        JTextField txtMaMayBay = new JTextField();
+        JTextField txtMaHangHangKhong = new JTextField();
+        JTextField txtMaSanBayDi = new JTextField();
+        JTextField txtMaSanBayDen = new JTextField();
+        JTextField txtNgayBay = new JTextField();
+        JTextField txtGioBay = new JTextField();
+        JTextField txtGioDen = new JTextField();
+        JTextField txtTongSoVe = new JTextField();
+        JTextField txtSoVeDaBan = new JTextField();
+        JTextField txtSoVeConLai = new JTextField();
+        JTextField txtTienVeThuVe = new JTextField();
+
+        // 3. Lấy dữ liệu từ dòng đang chọn trên bảng đắp lên Form
+        javax.swing.table.DefaultTableModel model = (javax.swing.table.DefaultTableModel) tbl_cb.getModel();
         
-        frame.add(new JLabel("Mã Chuyến Bay:"));
-        frame.add(txtMaChuyenBay);
-        frame.add(new JLabel("Hãng Hàng Không:"));
-        frame.add(txtHHK);
-        frame.add(new JLabel("Điểm Đến:"));
-        frame.add(txtDiemDen);
-        frame.add(new JLabel("Điểm Đi:"));
-        frame.add(txtDiemDi);
-        frame.add(new JLabel("Ngày Bay:"));
-        frame.add(txtNgayBay);
-        frame.add(new JLabel("Tổng Vé:"));
-        frame.add(txtTongVe);
-        frame.add(new JLabel("Đã Bán:"));
-        frame.add(txtDaBan);
+        txtMaChuyenBay.setText(model.getValueAt(selectedRow, 0) != null ? model.getValueAt(selectedRow, 0).toString() : "");
+        txtMaChuyenBay.setEditable(false); // BẮT BUỘC: KHÓA MÃ CHUYẾN BAY LẠI, KHÔNG CHO SỬA KHÓA CHÍNH
+
+        txtMaMayBay.setText(model.getValueAt(selectedRow, 1) != null ? model.getValueAt(selectedRow, 1).toString() : "");
+        txtMaHangHangKhong.setText(model.getValueAt(selectedRow, 2) != null ? model.getValueAt(selectedRow, 2).toString() : "");
+        txtMaSanBayDi.setText(model.getValueAt(selectedRow, 3) != null ? model.getValueAt(selectedRow, 3).toString() : "");
+        txtMaSanBayDen.setText(model.getValueAt(selectedRow, 4) != null ? model.getValueAt(selectedRow, 4).toString() : "");
+        txtNgayBay.setText(model.getValueAt(selectedRow, 5) != null ? model.getValueAt(selectedRow, 5).toString() : "");
+        txtGioBay.setText(model.getValueAt(selectedRow, 6) != null ? model.getValueAt(selectedRow, 6).toString() : "");
+        txtGioDen.setText(model.getValueAt(selectedRow, 7) != null ? model.getValueAt(selectedRow, 7).toString() : "");
+        txtTongSoVe.setText(model.getValueAt(selectedRow, 8) != null ? model.getValueAt(selectedRow, 8).toString() : "0");
+        txtSoVeDaBan.setText(model.getValueAt(selectedRow, 9) != null ? model.getValueAt(selectedRow, 9).toString() : "0");
+        txtSoVeConLai.setText(model.getValueAt(selectedRow, 10) != null ? model.getValueAt(selectedRow, 10).toString() : "0");
+        txtTienVeThuVe.setText(model.getValueAt(selectedRow, 11) != null ? model.getValueAt(selectedRow, 11).toString() : "0");
+
+        // 4. Gắn Label và TextField vào Form
+        frame.add(new JLabel("Mã Chuyến Bay (Khóa):")); frame.add(txtMaChuyenBay);
+        frame.add(new JLabel("Mã Máy Bay:")); frame.add(txtMaMayBay);
+        frame.add(new JLabel("Mã Hãng Hàng Không:")); frame.add(txtMaHangHangKhong);
+        frame.add(new JLabel("Mã Sân Bay Đi:")); frame.add(txtMaSanBayDi);
+        frame.add(new JLabel("Mã Sân Bay Đến:")); frame.add(txtMaSanBayDen);
+        frame.add(new JLabel("Ngày Bay (YYYY-MM-DD):")); frame.add(txtNgayBay);
+        frame.add(new JLabel("Giờ Bay:")); frame.add(txtGioBay);
+        frame.add(new JLabel("Giờ Đến:")); frame.add(txtGioDen);
+        frame.add(new JLabel("Tổng Số Vé:")); frame.add(txtTongSoVe);
+        frame.add(new JLabel("Số Vé Đã Bán:")); frame.add(txtSoVeDaBan);
+        frame.add(new JLabel("Số Vé Còn Lại:")); frame.add(txtSoVeConLai);
+        frame.add(new JLabel("Tiền Vé Thu Về:")); frame.add(txtTienVeThuVe);
         
-        JButton btnSave = new JButton("💾 Lưu");
+        JButton btnSave = new JButton("💾 Cập Nhật");
         JButton btnCancel = new JButton("❌ Hủy");
         
         JPanel buttonPanel = new JPanel();
@@ -756,32 +788,47 @@ public class GUI extends javax.swing.JFrame {
         frame.add(new JLabel());
         frame.add(buttonPanel);
         
+        // 5. Sự kiện khi bấm nút Cập Nhật
         btnSave.addActionListener(e -> {
             try {
+                // Kết nối Database và dùng lệnh UPDATE
                 Connection conn = DBConnection.getConnection();
-
-                String sql = "INSERT INTO chuyenbay VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+                String sql = "UPDATE chuyenbay SET maMayBay=?, maHangHangKhong=?, maSanBayDi=?, maSanBayDen=?, NgayBay=?, GioBay=?, GioDen=?, TongSoVe=?, SoVeDaBan=?, SoVeConLai=?, TienVeThuVe=? WHERE maChuyenBay=?";
                 PreparedStatement ps = conn.prepareStatement(sql);
 
-                ps.setString(1, txtMaChuyenBay.getText());
-                ps.setString(2, txtHHK.getText());
-                ps.setString(3, txtDiemDen.getText());
-                ps.setString(4, txtDiemDi.getText());
-                ps.setString(5, txtNgayBay.getText());
-                ps.setInt(6, Integer.parseInt(txtTongVe.getText()));
-                ps.setInt(7, Integer.parseInt(txtDaBan.getText()));
-                ps.setInt(8, Integer.parseInt(txtConLai.getText()));
+                ps.setString(1, txtMaMayBay.getText().trim());
+                ps.setString(2, txtMaHangHangKhong.getText().trim());
+                ps.setString(3, txtMaSanBayDi.getText().trim());
+                ps.setString(4, txtMaSanBayDen.getText().trim());
+                ps.setString(5, txtNgayBay.getText().trim());
+                ps.setString(6, txtGioBay.getText().trim());
+                ps.setString(7, txtGioDen.getText().trim());
+                
+                // Ép kiểu các ô số
+                ps.setInt(8, Integer.parseInt(txtTongSoVe.getText().trim().isEmpty() ? "0" : txtTongSoVe.getText().trim()));
+                ps.setInt(9, Integer.parseInt(txtSoVeDaBan.getText().trim().isEmpty() ? "0" : txtSoVeDaBan.getText().trim()));
+                ps.setInt(10, Integer.parseInt(txtSoVeConLai.getText().trim().isEmpty() ? "0" : txtSoVeConLai.getText().trim()));
+                ps.setLong(11, Long.parseLong(txtTienVeThuVe.getText().trim().isEmpty() ? "0" : txtTienVeThuVe.getText().trim()));
+                
+                // Điều kiện WHERE maChuyenBay = ?
+                ps.setString(12, txtMaChuyenBay.getText().trim());
 
-                ps.executeUpdate();
+                int rowsUpdated = ps.executeUpdate();
 
-                JOptionPane.showMessageDialog(frame, "Thêm thành công!");
+                if (rowsUpdated > 0) {
+                    JOptionPane.showMessageDialog(frame, "Cập nhật chuyến bay thành công!");
+                    frame.dispose(); // Đóng form
+                    btnDoc_cbActionPerformed(evt); // Tự động gọi lại nút Đọc để làm mới bảng
+                } else {
+                    JOptionPane.showMessageDialog(frame, "Cập nhật thất bại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                }
 
                 conn.close();
-                frame.dispose();
-                loadChuyenBay(); // reload bảng
 
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(frame, "Lỗi nhập liệu: Tổng vé, Số vé, Tiền vé phải là số nguyên!", "Lỗi định dạng", JOptionPane.ERROR_MESSAGE);
             } catch (Exception ex) {
-                ex.printStackTrace();
+                JOptionPane.showMessageDialog(frame, "Lỗi hệ thống: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
             }
         });
         
@@ -789,7 +836,7 @@ public class GUI extends javax.swing.JFrame {
         
         frame.setLocationRelativeTo(this);
         frame.setVisible(true);
-    }                                         
+    }           
 
     private void btnXoa_cbActionPerformed(java.awt.event.ActionEvent evt) {                                          
         int selectedRow = tbl_cb.getSelectedRow();
@@ -883,40 +930,58 @@ public class GUI extends javax.swing.JFrame {
     
     // Xử lý sự kiện lưu
     btnSave.addActionListener(e -> {
-    try {
-        // Kiểm tra rỗng (Làm mẫu vài ô quan trọng)
-        if (txtMaChuyenBay.getText().isEmpty() || txtNgayBay.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(frame, "Vui lòng nhập mã chuyến bay và ngày bay!", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
+        try {
+            // 1. Kiểm tra rỗng các trường bắt buộc (Mã CB, Ngày Bay)
+            if (txtMaChuyenBay.getText().trim().isEmpty() || txtNgayBay.getText().trim().isEmpty()) {
+                JOptionPane.showMessageDialog(frame, "Vui lòng nhập ít nhất Mã chuyến bay và Ngày bay!", "Thiếu thông tin", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
 
-        // Gom dữ liệu từ các TextField
-        model.ChuyenBay cb = new model.ChuyenBay();
-        cb.setMaChuyenBay(txtMaChuyenBay.getText());
-        cb.setMaHangHangKhong(txtHHK.getText());
-        cb.setMaSanBayDen(txtDiemDen.getText());
-        cb.setMaSanBayDi(txtDiemDi.getText());
-        cb.setNgayBay(txtNgayBay.getText());
-        
-        // Ép kiểu cho các ô số
-        cb.setTongSoVe(Integer.parseInt(txtTongVe.getText()));
-        cb.setSoVeDaBan(Integer.parseInt(txtDaBan.getText()));
-        
-        // Gọi DAO để lưu vào CSDL
-        DAO.ChuyenBayDAO dao = new DAO.ChuyenBayDAO();
-        if (dao.them(cb)) { // Hoặc insert(cb)
-            JOptionPane.showMessageDialog(frame, "Thêm chuyến bay thành công!");
-            frame.dispose(); // Đóng cửa sổ nhập liệu
-            btnDoc_cbActionPerformed(evt); // Cập nhật lại bảng chính
-        } else {
-            JOptionPane.showMessageDialog(frame, "Lỗi: Trùng mã chuyến bay hoặc sai dữ liệu!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            // 2. Khởi tạo đối tượng ChuyenBay và set 12 thuộc tính
+            model.ChuyenBay cb = new model.ChuyenBay();
+            
+            // Gán dữ liệu dạng Chuỗi (String)
+            cb.setMaChuyenBay(txtMaChuyenBay.getText().trim());
+            cb.setMaMayBay(txtMaMayBay.getText().trim());
+            cb.setMaHangHangKhong(txtMaHangHangKhong.getText().trim());
+            cb.setMaSanBayDi(txtMaSanBayDi.getText().trim());
+            cb.setMaSanBayDen(txtMaSanBayDen.getText().trim());
+            cb.setNgayBay(txtNgayBay.getText().trim());
+            cb.setGioBay(txtGioBay.getText().trim());
+            cb.setGioDen(txtGioDen.getText().trim());
+            
+            // 3. Gán dữ liệu dạng Số (Cần ép kiểu từ String sang Int / Long)
+            // Dùng '0' làm giá trị mặc định nếu người dùng để trống ô số
+            String strTongVe = txtTongSoVe.getText().trim().isEmpty() ? "0" : txtTongSoVe.getText().trim();
+            String strDaBan = txtSoVeDaBan.getText().trim().isEmpty() ? "0" : txtSoVeDaBan.getText().trim();
+            String strConLai = txtSoVeConLai.getText().trim().isEmpty() ? "0" : txtSoVeConLai.getText().trim();
+            String strTien = txtTienVeThuVe.getText().trim().isEmpty() ? "0" : txtTienVeThuVe.getText().trim();
+
+            cb.setTongSoVe(Integer.parseInt(strTongVe));
+            cb.setSoVeDaBan(Integer.parseInt(strDaBan));
+            cb.setSoVeConLai(Integer.parseInt(strConLai));
+            cb.setTienVeThuVe(Long.parseLong(strTien)); // Dùng Long cho tiền tệ
+
+            // 4. Gọi DAO để lưu vào CSDL MySQL
+            DAO.ChuyenBayDAO dao = new DAO.ChuyenBayDAO();
+            boolean isSuccess = dao.them(cb); // Lưu ý: Đổi thành dao.insert(cb) nếu DAO của bạn dùng tên tiếng Anh
+
+            // 5. Thông báo kết quả
+            if (isSuccess) {
+                JOptionPane.showMessageDialog(frame, "Thêm chuyến bay thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                frame.dispose(); // Đóng cửa sổ nhập liệu
+                btnDoc_cbActionPerformed(evt); // Tự động load lại bảng ở form chính để thấy data mới
+            } else {
+                JOptionPane.showMessageDialog(frame, "Thêm thất bại! Mã chuyến bay có thể đã tồn tại hoặc sai Khóa ngoại.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            }
+
+        } catch (NumberFormatException ex) {
+            // Bắt lỗi nếu người dùng nhập chữ vào ô chỉ cho phép nhập số
+            JOptionPane.showMessageDialog(frame, "Lỗi nhập liệu: Tổng vé, Số vé, Tiền vé phải là số nguyên!", "Lỗi định dạng", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(frame, "Lỗi hệ thống: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
         }
-    } catch (NumberFormatException ex) {
-        JOptionPane.showMessageDialog(frame, "Lỗi: Tổng vé và Số vé đã bán phải là chữ số!", "Lỗi Nhập Liệu", JOptionPane.ERROR_MESSAGE);
-    } catch (Exception ex) {
-        JOptionPane.showMessageDialog(frame, "Lỗi hệ thống: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
-    }
-});
+    });
     
     // Xử lý sự kiện hủy
     btnCancel.addActionListener(e -> frame.dispose());
@@ -1039,9 +1104,27 @@ public class GUI extends javax.swing.JFrame {
     
     }                                         
 
-    private void btnXoa_khActionPerformed(java.awt.event.ActionEvent evt) {                                          
-        // TODO add your handling code here:
-    }                                         
+    private void btnXoa_khActionPerformed(java.awt.event.ActionEvent evt) {
+        int selectedRow = tbl_kh.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn một khách hàng trên bảng để xóa!");
+            return;
+        }
+
+        // Lấy mã khách hàng từ cột 0 của dòng được chọn
+        String maKH = tbl_kh.getValueAt(selectedRow, 0).toString();
+
+        int confirm = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn xóa khách hàng " + maKH + "?", "Xác nhận", JOptionPane.YES_NO_OPTION);
+        if (confirm == JOptionPane.YES_OPTION) {
+            DAO.KhachHangDAO dao = new DAO.KhachHangDAO();
+            if (dao.xoa(maKH)) {
+                JOptionPane.showMessageDialog(this, "Xóa thành công!");
+                btnDoc_khActionPerformed(evt); // Gọi hàm cập nhật lại bảng
+            } else {
+                JOptionPane.showMessageDialog(this, "Xóa thất bại!");
+            }
+        }
+    }                                  
 
     private void btnTim_khActionPerformed(java.awt.event.ActionEvent evt) {                                           
     String maKH = JOptionPane.showInputDialog(this, "Nhập mã khách hàng:");
@@ -1079,6 +1162,29 @@ public class GUI extends javax.swing.JFrame {
     
     
     //========================= SỰ KIỆN CHO QUẢN LÝ VÉ ========================
+    private void btnDoc_veActionPerformed(java.awt.event.ActionEvent evt) {                                          
+        // Lấy model của bảng Vé
+        javax.swing.table.DefaultTableModel model = (javax.swing.table.DefaultTableModel) tbl_ve.getModel();
+        model.setRowCount(0); // Xóa sạch dữ liệu cũ
+        
+        try {
+            DAO.VeDAO dao = new DAO.VeDAO();
+            java.util.ArrayList<model.Ve> list = dao.docTatCa(); // Nhớ đổi thành selectAll() nếu dùng tiếng Anh
+            
+            for (model.Ve ve : list) {
+                model.addRow(new Object[]{
+                    ve.getMaVe(), 
+                    ve.getMaChuyenBay(), 
+                    ve.getMaGhe(), 
+                    ve.getLoaiVe(), 
+                    ve.getGiaVe()
+                });
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Lỗi khi đọc dữ liệu Vé: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
     private void btnThem_veActionPerformed(java.awt.event.ActionEvent evt) {                                           
         // TODO add your handling code here:
         JFrame frame = new JFrame("Thêm Vé");
@@ -1121,49 +1227,107 @@ public class GUI extends javax.swing.JFrame {
     }                                          
 
     private void btnSua_veActionPerformed(java.awt.event.ActionEvent evt) {                                          
-        // TODO add your handling code here:
-        JFrame frame = new JFrame("Sửa Vé");
-        frame.setLayout(new GridLayout(0, 2, 10, 10));
-        frame.setSize(400, 300);
-        
-        JTextField txtMaChuyenBay = new JTextField();
-        JTextField txtMaVe = new JTextField();
-        JTextField txtMaGhe = new JTextField();
-        JTextField txtLoaiVe= new JTextField();
-        JTextField txtGiaVe= new JTextField();
+    // 1. Kiểm tra xem người dùng đã chọn vé nào trên bảng chưa
+    int selectedRow = tbl_ve.getSelectedRow();
+    if (selectedRow == -1) {
+        JOptionPane.showMessageDialog(this, "Vui lòng chọn một vé trên bảng để sửa!", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
 
-        frame.add(new JLabel("Mã Vé:"));
-        frame.add(txtMaVe);
-        frame.add(new JLabel("Mã Chuyến Bay:"));
-        frame.add(txtMaChuyenBay);
-        frame.add(new JLabel("Mã Ghế:"));
-        frame.add(txtMaGhe);
-        frame.add(new JLabel("Lọai Vé:"));
-        frame.add(txtLoaiVe);
-        frame.add(new JLabel("Giá Vé:"));
-        frame.add(txtGiaVe);
-        
-        JButton btnSave = new JButton("💾 Lưu");
-        JButton btnCancel = new JButton("❌ Hủy");
-        
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.add(btnSave);
-        buttonPanel.add(btnCancel);
-        
-        frame.add(new JLabel());
-        frame.add(buttonPanel);
-        
-        btnSave.addActionListener(e -> {});
+    // 2. Tạo form Sửa
+    JFrame frame = new JFrame("Sửa Thông Tin Vé");
+    frame.setLayout(new java.awt.GridLayout(0, 2, 10, 10));
+    frame.setSize(400, 300);
+    
+    JTextField txtMaVe = new JTextField();
+    JTextField txtMaChuyenBay = new JTextField();
+    JTextField txtMaGhe = new JTextField();
+    JTextField txtLoaiVe = new JTextField();
+    JTextField txtGiaVe = new JTextField();
+
+    // 3. Đổ dữ liệu từ bảng lên Form
+    txtMaVe.setText(tbl_ve.getValueAt(selectedRow, 0).toString());
+    txtMaVe.setEditable(false); // KHÓA MÃ VÉ LẠI, KHÔNG CHO SỬA (Rất quan trọng)
+    txtMaChuyenBay.setText(tbl_ve.getValueAt(selectedRow, 1) != null ? tbl_ve.getValueAt(selectedRow, 1).toString() : "");
+    txtMaGhe.setText(tbl_ve.getValueAt(selectedRow, 2) != null ? tbl_ve.getValueAt(selectedRow, 2).toString() : "");
+    txtLoaiVe.setText(tbl_ve.getValueAt(selectedRow, 3) != null ? tbl_ve.getValueAt(selectedRow, 3).toString() : "");
+    txtGiaVe.setText(tbl_ve.getValueAt(selectedRow, 4) != null ? tbl_ve.getValueAt(selectedRow, 4).toString() : "");
+
+    frame.add(new JLabel("Mã Vé (Không đổi):")); frame.add(txtMaVe);
+    frame.add(new JLabel("Mã Chuyến Bay:")); frame.add(txtMaChuyenBay);
+    frame.add(new JLabel("Mã Ghế:")); frame.add(txtMaGhe);
+    frame.add(new JLabel("Loại Vé:")); frame.add(txtLoaiVe);
+    frame.add(new JLabel("Giá Vé:")); frame.add(txtGiaVe);
+    
+    JButton btnSave = new JButton("💾 Cập Nhật");
+    JButton btnCancel = new JButton("❌ Hủy");
+    
+    JPanel buttonPanel = new JPanel();
+    buttonPanel.add(btnSave);
+    buttonPanel.add(btnCancel);
+    
+    frame.add(new JLabel());
+    frame.add(buttonPanel);
+    
+    // 4. Sự kiện khi bấm nút Cập Nhật
+    btnSave.addActionListener(e -> {
+            try {
+                model.Ve ve = new model.Ve();
+                ve.setMaVe(txtMaVe.getText().trim());
+                ve.setMaChuyenBay(txtMaChuyenBay.getText().trim());
+                ve.setMaGhe(txtMaGhe.getText().trim());
+                ve.setLoaiVe(txtLoaiVe.getText().trim());
+                
+                // Ép kiểu Giá Vé sang double
+                String strGia = txtGiaVe.getText().trim().isEmpty() ? "0" : txtGiaVe.getText().trim();
+                ve.setGiaVe(Double.parseDouble(strGia));
+                
+                DAO.VeDAO dao = new DAO.VeDAO();
+                if (dao.sua(ve)) { // Đổi thành dao.update(ve) nếu cần
+                    JOptionPane.showMessageDialog(frame, "Cập nhật vé thành công!");
+                    frame.dispose();
+                    btnDoc_veActionPerformed(evt); // Load lại bảng
+                } else {
+                    JOptionPane.showMessageDialog(frame, "Cập nhật thất bại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                }
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(frame, "Giá vé phải là số!", "Lỗi Nhập Liệu", JOptionPane.ERROR_MESSAGE);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(frame, "Lỗi: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+            }
+        });
         
         btnCancel.addActionListener(e -> frame.dispose());
         
         frame.setLocationRelativeTo(this);
         frame.setVisible(true);
-    }                                         
+    }
     
     private void btnXoa_veActionPerformed(java.awt.event.ActionEvent evt) {                                          
-        // TODO add your handling code here:
-    }                                         
+        int selectedRow = tbl_ve.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn một vé trên bảng để xóa!", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        // Lấy Mã Vé từ cột 0
+        String maVe = tbl_ve.getValueAt(selectedRow, 0).toString();
+
+        int confirm = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn hủy vé " + maVe + " không?", "Xác nhận Hủy Vé", JOptionPane.YES_NO_OPTION);
+        if (confirm == JOptionPane.YES_OPTION) {
+            try {
+                DAO.VeDAO dao = new DAO.VeDAO();
+                if (dao.xoa(maVe)) { // Đổi thành delete() nếu cần
+                    JOptionPane.showMessageDialog(this, "Đã hủy vé thành công!");
+                    btnDoc_veActionPerformed(evt); // Tự động load lại bảng
+                } else {
+                    JOptionPane.showMessageDialog(this, "Hủy vé thất bại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                }
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "Lỗi hệ thống: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }                                       
 
     private void btnTim_veActionPerformed(java.awt.event.ActionEvent evt) {                                           
         String maVe = JOptionPane.showInputDialog(this, "Nhập mã vé:");
@@ -1201,34 +1365,44 @@ public class GUI extends javax.swing.JFrame {
     
     
     //========================= SỰ KIỆN CHO QUẢN LÝ CTKM ========================
-    private void btnThem_ctkmActionPerformed(java.awt.event.ActionEvent evt) {                                             
-        // TODO add your handling code here:
-        JFrame frame = new JFrame("Thêm Chương Trình Khuyến Mãi");
-        frame.setLayout(new GridLayout(0, 2, 10, 10));
-        frame.setSize(400, 400);
+    private void btnDoc_ctkmActionPerformed(java.awt.event.ActionEvent evt) {                                          
+        javax.swing.table.DefaultTableModel model = (javax.swing.table.DefaultTableModel) jTable4.getModel();
+        model.setRowCount(0); 
         
-        JTextField txtMaKhuyenMai = new JTextField();
-        JTextField txtTen = new JTextField();
-        JTextField txtGiaTri = new JTextField();
-        JTextField txtNgayBatDau= new JTextField();
-        JTextField txtNgayKetThuc= new JTextField();
-        JTextField txtDieuKien= new JTextField();
-        JTextField txtTrangThai= new JTextField();
+        try {
+            DAO.CTKMDAO dao = new DAO.CTKMDAO();
+            java.util.ArrayList<model.CTKM> list = dao.docTatCa(); 
+            
+            for (model.CTKM km : list) {
+                model.addRow(new Object[]{
+                    km.getMaCTKM(),
+                    km.getTenCTKM(),
+                    km.getNgayBD(),
+                    km.getNgayKT(),
+                    km.getNoiDung()
+                });
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Lỗi khi đọc dữ liệu CTKM: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    private void btnThem_ctkmActionPerformed(java.awt.event.ActionEvent evt) {                                             
+        JFrame frame = new JFrame("Thêm Chương Trình Khuyến Mãi");
+        frame.setLayout(new java.awt.GridLayout(0, 2, 10, 10));
+        frame.setSize(400, 300); // 5 thuộc tính nên thu nhỏ khung lại cho gọn
+        
+        JTextField txtMaCTKM = new JTextField();
+        JTextField txtTenCTKM = new JTextField();
+        JTextField txtNgayBD = new JTextField();
+        JTextField txtNgayKT = new JTextField();
+        JTextField txtNoiDung = new JTextField();
 
-        frame.add(new JLabel("Mã Khuyến Mãi:"));
-        frame.add(txtMaKhuyenMai);
-        frame.add(new JLabel("Tên Chương Trình Khuyến Mãi:"));
-        frame.add(txtTen);
-        frame.add(new JLabel("Giá Trị:"));
-        frame.add(txtGiaTri);
-        frame.add(new JLabel("Ngày Bắt Đầu:"));
-        frame.add(txtNgayBatDau);
-        frame.add(new JLabel("Ngày Kết Thúc:"));
-        frame.add(txtNgayKetThuc);
-        frame.add(new JLabel("Điều Kiện Áp Dụng:"));
-        frame.add(txtDieuKien);
-        frame.add(new JLabel("Trạng Thái:"));
-        frame.add(txtTrangThai);
+        frame.add(new JLabel("Mã CTKM:")); frame.add(txtMaCTKM);
+        frame.add(new JLabel("Tên CTKM:")); frame.add(txtTenCTKM);
+        frame.add(new JLabel("Ngày Bắt Đầu (YYYY-MM-DD):")); frame.add(txtNgayBD);
+        frame.add(new JLabel("Ngày Kết Thúc (YYYY-MM-DD):")); frame.add(txtNgayKT);
+        frame.add(new JLabel("Nội Dung:")); frame.add(txtNoiDung);
         
         JButton btnSave = new JButton("💾 Lưu");
         JButton btnCancel = new JButton("❌ Hủy");
@@ -1240,64 +1414,134 @@ public class GUI extends javax.swing.JFrame {
         frame.add(new JLabel());
         frame.add(buttonPanel);
         
-        btnSave.addActionListener(e -> {});
+        btnSave.addActionListener(e -> {
+            try {
+                model.CTKM km = new model.CTKM();
+                km.setMaCTKM(txtMaCTKM.getText().trim());
+                km.setTenCTKM(txtTenCTKM.getText().trim());
+                km.setNgayBD(txtNgayBD.getText().trim());
+                km.setNgayKT(txtNgayKT.getText().trim());
+                km.setNoiDung(txtNoiDung.getText().trim());
+
+                DAO.CTKMDAO dao = new DAO.CTKMDAO();
+                if (dao.them(km)) { 
+                    JOptionPane.showMessageDialog(frame, "Thêm CTKM thành công!");
+                    frame.dispose();
+                    btnDoc_ctkmActionPerformed(evt); // Load lại bảng
+                } else {
+                    JOptionPane.showMessageDialog(frame, "Thêm thất bại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                }
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(frame, "Lỗi: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+            }
+        });
         
         btnCancel.addActionListener(e -> frame.dispose());
-        
         frame.setLocationRelativeTo(this);
         frame.setVisible(true);
-    }                                            
+    }             
 
     private void btnSua_ctkmActionPerformed(java.awt.event.ActionEvent evt) {                                            
-        // TODO add your handling code here:
-        JFrame frame = new JFrame("Sửa Chương Trình Khuyến");
-        frame.setLayout(new GridLayout(0, 2, 10, 10));
-        frame.setSize(400, 400);
-        
-        JTextField txtMaKhuyenMai = new JTextField();
-        JTextField txtTen = new JTextField();
-        JTextField txtGiaTri = new JTextField();
-        JTextField txtNgayBatDau= new JTextField();
-        JTextField txtNgayKetThuc= new JTextField();
-        JTextField txtDieuKien= new JTextField();
-        JTextField txtTrangThai= new JTextField();
+    int selectedRow = jTable4.getSelectedRow();
+    if (selectedRow == -1) {
+        JOptionPane.showMessageDialog(this, "Vui lòng chọn một CTKM trên bảng để sửa!", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
 
-        frame.add(new JLabel("Mã Khuyến Mãi:"));
-        frame.add(txtMaKhuyenMai);
-        frame.add(new JLabel("Tên Chương Trình Khuyến Mãi:"));
-        frame.add(txtTen);
-        frame.add(new JLabel("Giá Trị:"));
-        frame.add(txtGiaTri);
-        frame.add(new JLabel("Ngày Bắt Đầu:"));
-        frame.add(txtNgayBatDau);
-        frame.add(new JLabel("Ngày Kết Thúc:"));
-        frame.add(txtNgayKetThuc);
-        frame.add(new JLabel("Điều Kiện Áp Dụng:"));
-        frame.add(txtDieuKien);
-        frame.add(new JLabel("Trạng Thái:"));
-        frame.add(txtTrangThai);
-        
-        JButton btnSave = new JButton("💾 Lưu");
-        JButton btnCancel = new JButton("❌ Hủy");
-        
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.add(btnSave);
-        buttonPanel.add(btnCancel);
-        
-        frame.add(new JLabel());
-        frame.add(buttonPanel);
-        
-        btnSave.addActionListener(e -> {});
-        
-        btnCancel.addActionListener(e -> frame.dispose());
-        
-        frame.setLocationRelativeTo(this);
-        frame.setVisible(true);
-    }                                           
+    JFrame frame = new JFrame("Sửa Chương Trình Khuyến Mãi");
+    frame.setLayout(new java.awt.GridLayout(0, 2, 10, 10));
+    frame.setSize(400, 300);
+    
+    JTextField txtMaCTKM = new JTextField();
+    JTextField txtTenCTKM = new JTextField();
+    JTextField txtNgayBD = new JTextField();
+    JTextField txtNgayKT = new JTextField();
+    JTextField txtNoiDung = new JTextField();
+
+    // Lấy dữ liệu từ bảng (chỉ có 5 cột: 0, 1, 2, 3, 4)
+    txtMaCTKM.setText(jTable4.getValueAt(selectedRow, 0).toString());
+    txtMaCTKM.setEditable(false); // KHÓA MÃ LẠI
+    txtTenCTKM.setText(jTable4.getValueAt(selectedRow, 1) != null ? jTable4.getValueAt(selectedRow, 1).toString() : "");
+    txtNgayBD.setText(jTable4.getValueAt(selectedRow, 2) != null ? jTable4.getValueAt(selectedRow, 2).toString() : "");
+    txtNgayKT.setText(jTable4.getValueAt(selectedRow, 3) != null ? jTable4.getValueAt(selectedRow, 3).toString() : "");
+    txtNoiDung.setText(jTable4.getValueAt(selectedRow, 4) != null ? jTable4.getValueAt(selectedRow, 4).toString() : "");
+
+    frame.add(new JLabel("Mã CTKM (Khóa):")); frame.add(txtMaCTKM);
+    frame.add(new JLabel("Tên CTKM:")); frame.add(txtTenCTKM);
+    frame.add(new JLabel("Ngày Bắt Đầu:")); frame.add(txtNgayBD);
+    frame.add(new JLabel("Ngày Kết Thúc:")); frame.add(txtNgayKT);
+    frame.add(new JLabel("Nội Dung:")); frame.add(txtNoiDung);
+    
+    JButton btnSave = new JButton("💾 Cập Nhật");
+    JButton btnCancel = new JButton("❌ Hủy");
+    
+    JPanel buttonPanel = new JPanel();
+    buttonPanel.add(btnSave);
+    buttonPanel.add(btnCancel);
+    
+    btnSave.addActionListener(e -> {
+        try {
+            model.CTKM km = new model.CTKM();
+            km.setMaCTKM(txtMaCTKM.getText().trim());
+            km.setTenCTKM(txtTenCTKM.getText().trim());
+            km.setNgayBD(txtNgayBD.getText().trim());
+            km.setNgayKT(txtNgayKT.getText().trim());
+            km.setNoiDung(txtNoiDung.getText().trim());
+            
+            DAO.CTKMDAO dao = new DAO.CTKMDAO();
+            if (dao.sua(km)) { 
+                JOptionPane.showMessageDialog(frame, "Cập nhật thành công!");
+                frame.dispose();
+                btnDoc_ctkmActionPerformed(evt);
+            } else {
+                JOptionPane.showMessageDialog(frame, "Cập nhật thất bại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(frame, "Lỗi: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
+    });
+    
+    btnCancel.addActionListener(e -> frame.dispose());
+    frame.setLocationRelativeTo(this);
+    frame.setVisible(true);
+}
 
     private void btnXoa_ctkmActionPerformed(java.awt.event.ActionEvent evt) {                                            
-        // TODO add your handling code here:
-    }                                           
+        // 1. Kiểm tra xem người dùng đã chọn dòng nào trên bảng jTable4 chưa
+        int selectedRow = jTable4.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn một chương trình khuyến mãi trên bảng để xóa!", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        // 2. Lấy Mã CTKM từ cột 0 của dòng được chọn
+        String maCTKM = jTable4.getValueAt(selectedRow, 0).toString();
+
+        // 3. Hiển thị hộp thoại xác nhận an toàn
+        int confirm = JOptionPane.showConfirmDialog(this, 
+                "Bạn có chắc chắn muốn xóa chương trình khuyến mãi: " + maCTKM + "?", 
+                "Xác nhận Xóa", 
+                JOptionPane.YES_NO_OPTION);
+                
+        if (confirm == JOptionPane.YES_OPTION) {
+            try {
+                // 4. Gọi DAO để thực thi lệnh xóa xuống MySQL
+                DAO.CTKMDAO dao = new DAO.CTKMDAO();
+                
+                // Lưu ý: Đổi tên hàm dao.xoa thành dao.delete nếu DAO của bạn dùng tiếng Anh
+                if (dao.xoa(maCTKM)) { 
+                    JOptionPane.showMessageDialog(this, "Xóa thành công!");
+                    
+                    // 5. Tự động làm mới bảng sau khi xóa
+                    btnDoc_ctkmActionPerformed(evt); 
+                } else {
+                    JOptionPane.showMessageDialog(this, "Xóa thất bại! Có thể mã CTKM này đang được dùng trong Hóa Đơn hoặc Chuyến Bay.", "Lỗi Ràng Buộc", JOptionPane.ERROR_MESSAGE);
+                }
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "Lỗi hệ thống: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }                                         
 
     private void btnTim_ctkmActionPerformed(java.awt.event.ActionEvent evt) {                                           
         String ma = JOptionPane.showInputDialog(this, "Nhập mã CTKM:");
@@ -1335,26 +1579,239 @@ public class GUI extends javax.swing.JFrame {
     
    
     //========================= SỰ KIỆN CHO BÁO CÁO ========================
-    private void btnHoaDonActionPerformed(java.awt.event.ActionEvent evt) {                                          
-        // TODO add your handling code here:
-    }                                         
-
-    private void btnBaoCaoActionPerformed(java.awt.event.ActionEvent evt) {                                          
-        // TODO add your handling code here:
-    }                                         
-
     private void btnThongKeActionPerformed(java.awt.event.ActionEvent evt) {                                           
-        // TODO add your handling code here:
-    }                                          
+        try {
+            // Lấy trực tiếp dữ liệu từ bảng Chuyến Bay đang hiển thị trên màn hình (Bỏ qua DAO)
+            javax.swing.table.DefaultTableModel model = (javax.swing.table.DefaultTableModel) tbl_cb.getModel();
+            int tongChuyenBay = model.getRowCount();
+            int tongVeDaBan = 0;
+            long tongDoanhThu = 0;
 
+            for (int i = 0; i < tongChuyenBay; i++) {
+                // Cột index 9 là "Đã Bán", Cột index 11 là "Tiền Vé"
+                Object objBan = model.getValueAt(i, 9);
+                Object objTien = model.getValueAt(i, 11);
+                
+                if (objBan != null && !objBan.toString().isEmpty()) {
+                    tongVeDaBan += Integer.parseInt(objBan.toString());
+                }
+                if (objTien != null && !objTien.toString().isEmpty()) {
+                    tongDoanhThu += Long.parseLong(objTien.toString());
+                }
+            }
+
+            jTextArea1.setText("========== BẢNG THỐNG KÊ TỔNG QUAN ==========\n\n");
+            jTextArea1.append("Tổng số chuyến bay đang khai thác: " + tongChuyenBay + " chuyến\n");
+            jTextArea1.append("Tổng số vé đã bán ra: " + tongVeDaBan + " vé\n");
+            jTextArea1.append("Tổng doanh thu toàn hệ thống: " + String.format("%,d", tongDoanhThu) + " VNĐ\n\n");
+            jTextArea1.append("=============================================\n");
+
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Lỗi thống kê: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void btnBaoCaoActionPerformed(java.awt.event.ActionEvent evt) {                                           
+        try {
+            javax.swing.table.DefaultTableModel model = (javax.swing.table.DefaultTableModel) tbl_cb.getModel();
+            int rowCount = model.getRowCount();
+
+            jTextArea1.setText("========== BÁO CÁO DOANH THU THEO CHUYẾN BAY ==========\n\n");
+            jTextArea1.append(String.format("%-15s %-20s %-15s %-20s\n", "Mã CB", "Ngày Bay", "Đã Bán", "Doanh Thu (VNĐ)"));
+            jTextArea1.append("-----------------------------------------------------------------------\n");
+
+            for (int i = 0; i < rowCount; i++) {
+                String maCB = model.getValueAt(i, 0) != null ? model.getValueAt(i, 0).toString() : "";
+                String ngayBay = model.getValueAt(i, 5) != null ? model.getValueAt(i, 5).toString() : "";
+                
+                Object objBan = model.getValueAt(i, 9);
+                int daBan = (objBan != null && !objBan.toString().isEmpty()) ? Integer.parseInt(objBan.toString()) : 0;
+                
+                Object objTien = model.getValueAt(i, 11);
+                long doanhThu = (objTien != null && !objTien.toString().isEmpty()) ? Long.parseLong(objTien.toString()) : 0;
+
+                jTextArea1.append(String.format("%-15s %-20s %-15d %,20d\n", maCB, ngayBay, daBan, doanhThu));
+            }
+            jTextArea1.append("-----------------------------------------------------------------------\n");
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Lỗi xuất báo cáo: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
+    }                                     
+
+    private void btnHoaDonActionPerformed(java.awt.event.ActionEvent evt) {                                          
+        String maVe = JOptionPane.showInputDialog(this, "Nhập Mã Vé để xem hóa đơn (Ví dụ: VTH01):");
+        if (maVe != null && !maVe.trim().isEmpty()) {
+            try {
+                // Kết nối thẳng Database để lấy dữ liệu chuẩn 100%
+                Connection conn = DBConnection.getConnection();
+                
+                String sqlVe = "SELECT * FROM ve WHERE maVe = ?";
+                PreparedStatement psVe = conn.prepareStatement(sqlVe);
+                psVe.setString(1, maVe.trim());
+                ResultSet rsVe = psVe.executeQuery();
+                
+                if (!rsVe.next()) {
+                    JOptionPane.showMessageDialog(this, "Không tìm thấy vé với mã: " + maVe, "Lỗi", JOptionPane.ERROR_MESSAGE);
+                    conn.close();
+                    return;
+                }
+                
+                String maCB = rsVe.getString("maChuyenBay");
+                String maGhe = rsVe.getString("maGhe");
+                String loaiVe = rsVe.getString("loaiVe");
+                double giaVe = rsVe.getDouble("giaVe");
+                
+                String sqlCB = "SELECT * FROM chuyenbay WHERE maChuyenBay = ?";
+                PreparedStatement psCB = conn.prepareStatement(sqlCB);
+                psCB.setString(1, maCB);
+                ResultSet rsCB = psCB.executeQuery();
+                
+                jTextArea1.setText("================ HÓA ĐƠN THANH TOÁN ================\n\n");
+                jTextArea1.append("Mã Vé: " + maVe.toUpperCase() + "\n");
+                
+                java.time.LocalDateTime now = java.time.LocalDateTime.now();
+                java.time.format.DateTimeFormatter formatter = java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+                jTextArea1.append("Ngày in: " + now.format(formatter) + "\n");
+                jTextArea1.append("----------------------------------------------------\n");
+                jTextArea1.append("CHI TIẾT CHUYẾN BAY:\n");
+                
+                if (rsCB.next()) {
+                    jTextArea1.append("- Chuyến bay: " + maCB + " (" + rsCB.getString("maHangHangKhong") + ")\n");
+                    jTextArea1.append("- Hành trình: Sân bay " + rsCB.getString("maSanBayDi") + " ---> Sân bay " + rsCB.getString("maSanBayDen") + "\n");
+                    jTextArea1.append("- Khởi hành: " + rsCB.getString("GioBay") + " ngày " + rsCB.getString("NgayBay") + "\n");
+                } else {
+                    jTextArea1.append("- Chuyến bay: " + maCB + " (Chưa có thông tin chi tiết)\n");
+                }
+
+                jTextArea1.append("----------------------------------------------------\n");
+                jTextArea1.append("CHI TIẾT VÉ:\n");
+                jTextArea1.append("- Mã Ghế: " + maGhe + "\n");
+                jTextArea1.append("- Hạng Vé: " + loaiVe + "\n");
+                jTextArea1.append("----------------------------------------------------\n");
+                
+                jTextArea1.append("TỔNG TIỀN THANH TOÁN: " + String.format("%,.0f", giaVe) + " VNĐ\n\n");
+                jTextArea1.append("========= CẢM ƠN QUÝ KHÁCH ĐÃ ĐẶT CHUYẾN BAY =========\n");
+
+                conn.close();
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "Lỗi khi tạo hóa đơn: " + ex.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
     private void btnXuatHoaDonActionPerformed(java.awt.event.ActionEvent evt) {                                              
-        // TODO add your handling code here:
+        // Kiểm tra
+        if (jTextArea1.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Không có nội dung nào để xuất PDF! Vui lòng nhấn 'Xem Hóa Đơn' hoặc 'Thống Kê' trước.", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        try {
+            JOptionPane.showMessageDialog(this, "Đang mở hộp thoại xuất PDF / Máy in...", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            boolean isPrinted = jTextArea1.print(); 
+            
+            if (isPrinted) {
+                JOptionPane.showMessageDialog(this, "Thao tác thành công!", "Hoàn tất", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, "Bạn đã hủy thao tác.", "Đã hủy", JOptionPane.WARNING_MESSAGE);
+            }
+        } catch (java.awt.print.PrinterException e) {
+            JOptionPane.showMessageDialog(this, "Lỗi khi xuất PDF: " + e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
     }
     
+    private void btnXuatExcel_cbActionPerformed(java.awt.event.ActionEvent evt) {                                                
+        javax.swing.table.DefaultTableModel model = (javax.swing.table.DefaultTableModel) tbl_cb.getModel();
+        if (model.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(this, "Không có dữ liệu trên bảng để xuất!", "Cảnh báo", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
 
+        javax.swing.JFileChooser fileChooser = new javax.swing.JFileChooser();
+        fileChooser.setDialogTitle("Chọn nơi lưu file Excel (CSV)");
+        
+        if (fileChooser.showSaveDialog(this) == javax.swing.JFileChooser.APPROVE_OPTION) {
+            java.io.File file = fileChooser.getSelectedFile();
+            String path = file.getAbsolutePath();
+            if (!path.toLowerCase().endsWith(".csv")) {
+                path += ".csv";
+            }
+
+            try (java.io.PrintWriter pw = new java.io.PrintWriter(new java.io.File(path), "UTF-8")) {
+                pw.write('\ufeff');
+                
+                for (int i = 0; i < model.getColumnCount(); i++) {
+                    pw.print(model.getColumnName(i) + (i == model.getColumnCount() - 1 ? "" : ","));
+                }
+                pw.println();
+
+                //In Dữ liệu từng dòng
+                for (int i = 0; i < model.getRowCount(); i++) {
+                    for (int j = 0; j < model.getColumnCount(); j++) {
+                        Object val = model.getValueAt(i, j);
+                        pw.print((val == null ? "" : val.toString()) + (j == model.getColumnCount() - 1 ? "" : ","));
+                    }
+                    pw.println();
+                }
+                JOptionPane.showMessageDialog(this, "Xuất file Excel thành công tại:\n" + path);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Lỗi xuất file: " + e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+
+    private void btnNhapExcel_cbActionPerformed(java.awt.event.ActionEvent evt) {                                                
+        javax.swing.JFileChooser fileChooser = new javax.swing.JFileChooser();
+        fileChooser.setDialogTitle("Chọn file Excel (CSV) để nhập vào Database");
+        
+        if (fileChooser.showOpenDialog(this) == javax.swing.JFileChooser.APPROVE_OPTION) {
+            java.io.File file = fileChooser.getSelectedFile();
+
+            try (java.io.BufferedReader br = new java.io.BufferedReader(new java.io.InputStreamReader(new java.io.FileInputStream(file), "UTF-8"))) {
+                String line;
+                boolean isFirstLine = true;
+                DAO.ChuyenBayDAO dao = new DAO.ChuyenBayDAO();
+                int count = 0;
+
+                // Đọc từng dòng trong file Excel
+                while ((line = br.readLine()) != null) {
+                    if (isFirstLine) { 
+                        isFirstLine = false;
+                        continue;
+                    }
+                    
+                    String[] data = line.split(",");
+                    if (data.length >= 12) {
+                        model.ChuyenBay cb = new model.ChuyenBay();
+                        cb.setMaChuyenBay(data[0].trim());
+                        cb.setMaMayBay(data[1].trim());
+                        cb.setMaHangHangKhong(data[2].trim());
+                        cb.setMaSanBayDi(data[3].trim());
+                        cb.setMaSanBayDen(data[4].trim());
+                        cb.setNgayBay(data[5].trim());
+                        cb.setGioBay(data[6].trim());
+                        cb.setGioDen(data[7].trim());
+                        
+                        cb.setTongSoVe(Integer.parseInt(data[8].trim().isEmpty() ? "0" : data[8].trim()));
+                        cb.setSoVeDaBan(Integer.parseInt(data[9].trim().isEmpty() ? "0" : data[9].trim()));
+                        cb.setSoVeConLai(Integer.parseInt(data[10].trim().isEmpty() ? "0" : data[10].trim()));
+                        cb.setTienVeThuVe(Long.parseLong(data[11].trim().isEmpty() ? "0" : data[11].trim()));
+
+                        if(dao.them(cb)) { 
+                            count++; 
+                        }
+                    }
+                }
+                JOptionPane.showMessageDialog(this, "Đã nhập thành công " + count + " chuyến bay vào Database!");
+                btnDoc_cbActionPerformed(evt); // Gọi hàm để load lại bảng
+                
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Lỗi đọc file Excel: " + e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
     public void loadChuyenBay() {
         DefaultTableModel model = (DefaultTableModel) tbl_cb.getModel();
-        model.setRowCount(0); // xóa dữ liệu cũ
+        model.setRowCount(0);
 
         try {
             Connection conn = DBConnection.getConnection();
